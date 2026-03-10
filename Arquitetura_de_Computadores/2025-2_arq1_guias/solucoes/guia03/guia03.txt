@@ -1,0 +1,503 @@
+Gabriel Agostinho da Silva
+903104
+
+Soluções -
+
+01.) Determinar os complementos para os valores e as quantidades de bits indicadas
+
+a.) C1,6 (1010(2)) = X(2)
+
+Primeiro ajustamos o número para 6 bits.
+
+1010(2) = 001010(2)
+
+Para encontrar o complemento de 1 basta inverter cada bit.
+
+001010
+110101
+
+Resultado
+
+C1,6 (1010(2)) = 110101(2)
+
+
+b.) C1,6 (1001(2)) = X(2)
+
+1001(2) = 001001(2)
+
+
+
+001001
+110110
+
+Resultado
+
+C1,6 (1001(2)) = 110110(2)
+
+
+c.) C2,6 (101001(2)) = X(2)
+
+101001
+010110
+
+010110 + 1 = 010111
+
+Resultado
+
+C2,6 (101001(2)) = 010111(2)
+
+
+d.) C2,7 (101011(2)) = X(2)
+
+101011(2) = 0101011(2)
+
+0101011
+1010100
+
+Agora somamos 1.
+
+1010100 + 1 = 1010101
+
+Resultado
+
+C2,7 (101011(2)) = 1010101(2)
+
+e.) C2,8 (111010(2)) = X(2)
+
+
+111010(2) = 00111010(2)
+
+00111010
+11000101
+
+
+11000101 + 1 = 11000110
+
+Resultado
+
+C2,8 (111010(2)) = 11000110(2)
+
+02.) Determinar os complementos para valores em outras bases
+
+Para valores em outras bases, primeiro convertimos para binário.
+
+a.) C1,6 (213(4)) = X(2)
+
+Primeiro convertemos para decimal.
+
+2 x 4^2 + 1 x 4^1 + 3 x 4^0
+2 x 16 + 1 x 4 + 3 x 1
+32 + 4 + 3 = 39
+
+Agora convertemos para binário.
+
+39(10) = 100111(2)
+
+Como já possui 6 bits, fazemos o complemento de 1.
+
+100111
+011000
+
+Resultado
+
+C1,6 (213(4)) = 011000(2)
+
+b.) C1,8 (D6(16)) = X(2)
+
+
+D = 1101
+6 = 0110
+
+Resultado
+
+11010110(2)
+
+
+11010110
+00101001
+
+Resultado
+
+C1,8 (D6(16)) = 00101001(2)
+
+c.) C2,6 (312(4)) = X(2)
+
+
+3 x 4^2 + 1 x 4^1 + 2 x 4^0
+3 x 16 + 1 x 4 + 2
+48 + 4 + 2 = 54
+
+54(10) = 110110(2)
+
+
+110110
+001001
+
+
+001001 + 1 = 001010
+
+Resultado
+
+C2,6 (312(4)) = 001010(2)
+
+d.) C2,10 (157(8)) = X(2)
+
+
+1 = 001
+5 = 101
+7 = 111
+
+
+001101111(2)
+
+
+001101111
+110010000
+
+
+110010000 + 1 = 110010001
+
+Resultado
+
+C2,10 (157(8)) = 110010001(2)
+
+e.) C2,8 (8E(16)) = X(2)
+
+
+8 = 1000
+E = 1110
+
+Resultado
+
+10001110(2)
+
+10001110
+01110001
+
+
+01110001 + 1 = 01110010
+
+Resultado
+
+C2,8 (8E(16)) = 01110010(2)
+
+03.) Determinar os valores positivos equivalentes aos complementos de dois indicados
+
+Para encontrar o valor positivo equivalente de um número em complemento de dois, subtraímos 1 e depois invertimos os bits.
+
+a.) 10111(2) = X(10)
+
+Subtraindo 1.
+
+10111 - 1 = 10110
+
+Invertendo os bits.
+
+10110
+01001
+
+Convertendo para decimal.
+
+0 x 2^4 + 1 x 2^3 + 0 x 2^2 + 0 x 2^1 + 1 x 2^0
+0 + 8 + 0 + 0 + 1 = 9
+
+Resultado
+
+10111(2) = -9(10)
+
+b.) 110101(2) = X(10)
+
+110101 - 1 = 110100
+
+110100
+001011
+
+0 x 2^5 + 0 x 2^4 + 1 x 2^3 + 0 x 2^2 + 1 x 2^1 + 1 x 2^0
+0 + 0 + 8 + 0 + 2 + 1 = 11
+
+Resultado
+
+110101(2) = -11(10)
+
+c.) 100100(2) = X(2)
+
+
+100100 - 1 = 100011
+
+100011
+011100
+
+Resultado
+
+011100(2)
+
+d.) 1011011(2) = X(2)
+
+1011011 - 1 = 1011010
+
+1011010
+0100101
+
+Resultado
+
+0100101(2)
+
+e.) 1111101(2) = X(16)
+
+
+1111101 - 1 = 1111100
+
+
+1111100
+0000011
+
+0000011(2) = 3(10)
+
+Resultado
+
+3(16)
+
+
+04.) Fazer as operações indicadas mediante uso de complemento de dois
+
+a.) 11011(2) - 1101(2) = X(2)
+
+Primeiro colocamos os números com o mesmo tamanho.
+
+11011
+01101
+
+Agora encontramos o complemento de dois de 1101.
+
+Complemento de 1
+
+01101
+10010
+
+Somando 1
+
+10010 + 1 = 10011
+
+Agora somamos.
+
+11011
++10011
+
+110110
+
+Descartando o da esquerda.
+
+10110
+
+Resultado
+
+11011(2) - 1101(2) = 1110(2)
+
+b.) 101,1001(2) - 10,11(2) = X(2)
+
+101,1001
+010,1100
+
+
+010,1100
+
+
+101,0011
+
+
+101,0011 + 1 = 101,0100
+
+
+101,1001
++101,0100
+
+1011,1101
+
+
+011,1101
+
+Resultado
+
+101,1001(2) - 10,11(2) = 11,1101(2)
+
+c.) 312(4) - 123(4) = X(4)
+
+
+312(4)
+
+3 x 4^2 + 1 x 4^1 + 2 x 4^0
+3 x 16 + 1 x 4 + 2
+48 + 4 + 2 = 54
+
+123(4)
+
+1 x 4^2 + 2 x 4^1 + 3 x 4^0
+16 + 8 + 3 = 27
+
+
+54 - 27 = 27
+
+
+27 / 4 = 6 resto 3
+6 / 4 = 1 resto 2
+
+Resultado
+
+123(4)
+
+d.) 754(8) - 367(8) = X(8)
+
+
+754(8)
+
+7 x 8^2 + 5 x 8^1 + 4 x 8^0
+448 + 40 + 4 = 492
+
+367(8)
+
+3 x 8^2 + 6 x 8^1 + 7 x 8^0
+192 + 48 + 7 = 247
+
+
+492 - 247 = 245
+
+
+245 / 8 = 30 resto 5
+30 / 8 = 3 resto 6
+
+Resultado
+
+365(8)
+
+e.) A85(16) - C14(16) = X(16)
+
+A85(16)
+
+10 x 16^2 + 8 x 16^1 + 5 x 16^0
+2560 + 128 + 5 = 2693
+
+C14(16)
+
+12 x 16^2 + 1 x 16^1 + 4 x 16^0
+3072 + 16 + 4 = 3092
+
+
+2693 - 3092 = -399
+
+399 / 16 = 24 resto 15
+24 / 16 = 1 resto 8
+
+Resultado
+
+-18F(16)
+
+05.) Executar as operações abaixo usando complemento de 2 em registradores de 8 bits
+
+a.) 110001(2) - 1011(2)
+
+Primeiro ajustamos para 8 bits.
+
+110001 = 00110001
+1011 = 00001011
+
+Complemento de 2 de 1011.
+
+00001011
+
+Complemento de 1
+
+11110100
+
+Somando 1
+
+11110100 + 1 = 11110101
+
+Agora somamos.
+
+00110001
++11110101
+
+100100110
+
+Descartando o carry.
+
+00100110
+
+Resultado
+
+00100110(2)
+
+b.) 101,1101(2) - 4,6(8)
+
+
+4 = 100
+6 = 110
+
+Resultado
+
+100,110(2)
+
+
+101,1101
+100,1100
+
+
+Resultado
+
+001,0001(2)
+
+c.) 132(4) - 7A(16)
+
+
+132(4)
+
+1 x 4^2 + 3 x 4^1 + 2 x 4^0
+16 + 12 + 2 = 30
+
+7A(16)
+
+7 x 16^1 + 10 x 16^0
+112 + 10 = 122
+
+
+30 - 122 = -92
+
+Resultado
+
+-92(10)
+
+d.) A72(16) - 1011101(2)
+
+
+10 x 16^2 + 7 x 16^1 + 2 x 16^0
+2560 + 112 + 2 = 2674
+
+
+1 x 2^6 + 0 x 2^5 + 1 x 2^4 + 1 x 2^3 + 1 x 2^2 + 0 x 2^1 + 1 x 2^0
+64 + 0 + 16 + 8 + 4 + 0 + 1 = 93
+
+
+2674 - 93 = 2581
+
+Resultado
+
+2581(10)
+
+e.) 6D(16) - 7E(16)
+
+
+6D(16)
+
+6 x 16^1 + 13 x 16^0
+96 + 13 = 109
+
+7E(16)
+
+7 x 16^1 + 14 x 16^0
+112 + 14 = 126
+
+109 - 126 = -17
+
+Resultado
+
+-17(10)
