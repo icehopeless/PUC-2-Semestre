@@ -1,11 +1,10 @@
 import java.util.*;
 
 public class atividade02 {
-
+    public static Random gerador = new Random();
+    
     public static String randomAlter(String str){
         //gerando os dois caracteres aleatorios
-        Random gerador = new Random();
-        gerador.setSeed(4);
         char[] chars = new char[str.length()]; //criacao de uma string literal para manipulacao de caracteres
 
         char a = ((char)('a' + (Math.abs(gerador.nextInt()) % 26))),
@@ -23,24 +22,17 @@ public class atividade02 {
     }
 
     public static void main (String[] args){
+        gerador.setSeed(4);
 		int count = 0;
-		String[] lines = new String [100];
+		String[] lines = new String [1000];
 		Scanner scan = new Scanner(System.in);
 
-		while((scan.hasNextLine())){		
-			lines[count] = scan.nextLine();
+		while(!(lines[count] = scan.nextLine()).equals("FIM")){		
 			count++;
 		}
 
-		String[] out = new String[count];
-
-
 		for(int i = 0; i < count; i++){
-			out[i] = randomAlter(lines[i]); 
-		}
-		
-		for (String s : out) {
-			System.out.println(s);
+    		System.out.println(randomAlter(lines[i]));
 		}
 	}
 }

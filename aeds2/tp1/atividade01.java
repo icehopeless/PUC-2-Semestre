@@ -17,23 +17,15 @@ public class atividade01{
 
 	public static void main (String[] args){
 		int count = 0;
-		String[] lines = new String [100];
+		String[] lines = new String [1000];
 		Scanner scan = new Scanner(System.in);
 
-		while((scan.hasNextLine())){		
-			lines[count] = scan.nextLine();
+		while(!(lines[count] = scan.nextLine()).equals("FIM")){		
 			count++;
 		}
-
-		String[] out = new String[count];
-
-
-		for(int i = 0; i < count; i++){
-			out[i] = cifraCesar(lines[i]); 
-		}
 		
-		for (String s : out) {
-			System.out.println(s);
+		for(int i = 0; i < count; i++){
+    		System.out.println(cifraCesar(lines[i]));
 		}
 	}
 	
