@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//funcao que conta o tamanho da string recebida
 int lengthStr(char *str){
 	int count = 0;
 
@@ -11,6 +12,8 @@ int lengthStr(char *str){
 	return count; 
 }
 
+
+//funcao que compara uma string com outra passadas por parametro
 int strCompare(char * str, char * str2){
 	int aux = 1;
 	if(lengthStr(str) != lengthStr(str2)){
@@ -25,6 +28,7 @@ int strCompare(char * str, char * str2){
 }
 
 
+//funcao que recebe uma string e retorna ela inversa
 char * reverseStr(char * str){
 	int size = lengthStr(str);
 	char *out = (char *) malloc((size+1) * sizeof(char));
@@ -41,15 +45,14 @@ char * reverseStr(char * str){
 
 void main(){
 	char str[256];
-	
+	//loop que quebra quando a entrada for igual a FIM
 	while(1){
 		scanf(" %[^\n]", str);
 		if(strCompare(str, "FIM")){
 			break;
 		}
 
-		printf("%s\n", reverseStr(str));
+		printf("%s\n", reverseStr(str)); //printa a string inversa
 	}
 
 }
-

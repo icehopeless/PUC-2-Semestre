@@ -35,13 +35,15 @@ public class atividade01{
 		String[] lines = new String [1000];
 		Scanner scan = new Scanner(System.in);
 
+
+		//para o laco quando a entrada for FIM
 		String linha = scan.nextLine();
 		while(!compareStrings(linha, "FIM")){
 			lines[count] = linha;
 			count++;
 			linha = scan.nextLine();
 		}
-		
+		//printa os resultados
 		for(int i = 0; i < count; i++){
     		System.out.println(cifraCesar(lines[i]));
 		}

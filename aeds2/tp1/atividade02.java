@@ -42,13 +42,15 @@ public class atividade02 {
 		String[] lines = new String [1000];
 		Scanner scan = new Scanner(System.in);
 
+		//loop com condicao de parada quando a linha for FIM
 		String linha = scan.nextLine();
 		while(!compareStrings(linha, "FIM")){
 			lines[count] = linha;
 			count++;
 			linha = scan.nextLine();
 		}
-
+		
+		//printa a saida 
 		for(int i = 0; i < count; i++){
     		System.out.println(randomAlter(lines[i]));
 		}

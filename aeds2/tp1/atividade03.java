@@ -91,42 +91,44 @@ public class atividade03 {
 		Scanner scan = new Scanner(System.in);
         String out = new String();
 
+
+		//loop com condicao de parada quando linha for igual a FIM
 		String linha = scan.nextLine();
 		while(!compareStrings(linha, "FIM")){
 			lines[count] = linha;
 			count++;
 			linha = scan.nextLine();
-		}
+	}
 
-        
-		for(int i = 0; i < count; i++){
-    		if(fullVogal(lines[i])){
-                out += "SIM";
-            }else{
-                out += "NAO";
-            }
+       //montando e printando a saida. 	
+	for(int i = 0; i < count; i++){
+    		if(fullVogal(lines[i])){ 
+               		 out += "SIM";
+            	}else{
+               	 	out += "NAO";
+            	}
 
-            if(fullConsoante(lines[i])){
-                out += " SIM";
-            }else{
-                out += " NAO";
-            }
+            	if(fullConsoante(lines[i])){
+                	out += " SIM";
+            	}else{
+                	out += " NAO";
+            	}
 
-            if(isInteiro(lines[i])){
-                out += " SIM";
-            }else{
-                out += " NAO";
-            }
+            	if(isInteiro(lines[i])){
+                	out += " SIM";
+            	}else{
+                	out += " NAO";
+            	}
 
-            if(isReal(lines[i])){
-                out += " SIM";
-            }else{
-                out += " NAO";
-            }
+            	if(isReal(lines[i])){
+                	out += " SIM";
+            	}else{
+                	out += " NAO";
+            	}
 
             System.out.println(out);
             out = "";
-		}
-	} 
+	}
+   } 
 
 }

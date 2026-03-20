@@ -1,7 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define TAM 256;
+#define TAM 256
 
+//funcao que recebe um caracter e retorna ele em lower 
+char lowerChar(char c) {
+	if (c >= 'A' && c <= 'Z') {
+        	return c + 32;
+    	}
+
+   	 return c;
+}
+
+//funcao que retorna o tamanho de uma string passada por parametro 
 int lengthStr(char *str){
 	int count = 0;
 
@@ -12,6 +22,7 @@ int lengthStr(char *str){
 	return count;
 }
 
+//funcao que que recebe duas string e retorna true caso sejam iguais
 int strCompare(char * str, char * str2){
 	int aux = 1;
 	if(lengthStr(str) != lengthStr(str2)){
@@ -25,20 +36,52 @@ int strCompare(char * str, char * str2){
 	return 1;
 }
 
+//funcao que retorna true caso as strings sejam anagramas uma da outra
 char * anagramaStr(char *str1, char *str2){
+	int usadas[lengthStr(str1)], aux = 0;
 
+	
+       if(lengthStr(str1) != lengthStr(str2)){
+                return "NÃO";
+        }
 
+	for(int i = 0; i < lengthStr(str1); i++){
+		usadas[i] = 0;
+	}	
+
+	for(int i = 0; i < lengthStr(str1); i++){
+		aux = 0;
+		for(int j = 0; j < lengthStr(str2); j++){
+			if(usadas[j] == 0  && lowerChar(str1[i]) == lowerChar(str2[j])){
+				aux = 1;
+				usadas[j] = 1;
+				break;
+			}
+		}
+		if(!aux){
+			return "NÃO";
+		}
+	}
+
+	return "SIM";
 }
 
 
 int main(){
 	char str1[TAM], str2[TAM];
-
+	
+	//loop que quebra quando uma das strings forem igual a FIM 
 	while(1){
-		if(strCompare(str1,"FIM") != 1 || strCompare(str2,"FIM")!= 1){
-			
-		}
+
+		scanf(" %[^ \n]", str1); //le a string ate um espaco ou \n
+		getchar(); //consome o \n
+		 if(strCompare(str1, "FIM")){
+                        break;
+                }
+
+		getchar();
+		scanf(" %[^\n]", str2);
+		
+		printf("%s\n", anagramaStr(str1, str2));
 	}	
 }
-
-
