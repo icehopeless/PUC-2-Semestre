@@ -1,0 +1,30 @@
+para funcoes recursivas que retornam string, ou manipulam strings, e importante a presenca se uma variavel 
+para manipular o indice.
+
+no exemplo para verificar recursivamente se a string e composta somente por vogais:
+
+int isVogal(char * str, int i){
+        char c = lowerCase(str[i]);
+
+        //caso mais fundamental.
+        if(!compareCaseVogal(c)){
+                return 0;
+        }
+
+        if(i == lengthStr(str)-1){
+                return 1;
+        }
+
+        return isVogal(str, i+1);
+}
+
+verificamos, recursivamente, se cada posicao da string guiada pelo indice i(int) NAO e uma vogal (retorna 0)
+caso seja uma vogal, verificamos se esta no fim da string (se tiver, retorna 1 pois todos sao vogais)
+na chamada recursiva iteramos o i em 1, para andar pela string. 
+
+
+1 if - (o que define um inteiro, vogal, consoante...) (negamos isso)
+2 - (estou no final da string?) (se tiver, e for um inteiro, vogal ..., todos sao, pois o if de cima garante isso)
+3 - chamada recursiva pra continuar o loop
+
+

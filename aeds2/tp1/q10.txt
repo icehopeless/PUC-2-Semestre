@@ -1,0 +1,18 @@
+Questao is de forma recursiva
+
+vogais
+consoantes
+inteiro
+real
+
+saida 
+SIM SIM NAO NAO
+
+
+cada funcao sera do tipo inteiro, o caso base sera quando o caracter da string sair fora do escopo
+a chamada recursiva sera caracter por caracter da string - str[i];
+
+
+uma outra opcao seria criar uma variavel que sera iterada com o tamanho da string recebida.
+o caso base sera, quando chegar na ultima verificacao do caracter da string, se a variavel tiver tamanho diferente
+do tamanho da string, nao e composta somendo por vogal, consoantes...
