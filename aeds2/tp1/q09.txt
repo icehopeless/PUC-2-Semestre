@@ -1,0 +1,21 @@
+Para o ciframento de cesar, aumentamos cada posicao da string em + key
+onde key, neste caso = 3;
+
+para Recursao:
+
+a condicao de parada = ultima posicao da string. Neste caso precisamos tratar o \n se tiver.
+para recursao de string, temos a ideia de retornar caracter por caracter e ir somando, para no fim 
+termos a string completa.
+
+neste caso, precisamos retornar o caracter atual + 3;
+
+return str[i] + 3 + func(str[i+1]);
+para ter o controle da string, precisamos de um indice que aumente conforme a recursao.
+
+
+
+2 - 
+
+Como precisamos retornar uma string, uma opcao seria modificar uma string de retorno
+o caso base vai ser o final da string \0
+
