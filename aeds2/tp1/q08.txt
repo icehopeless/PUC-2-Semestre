@@ -1,0 +1,7 @@
+uma senha valida e composta por 8 caracteres no minimo, dentre estes
+ao menos uma letra maiuscula, uma minuscula, um numero e um caracter especial exemplo (!, @, #, etc...)
+
+maiuscula = 65 a 90
+minuscula = 97 a 122
+numero = 48 a 57
+caracter especial = !(todos acima) + !(espaco) + !(\n \t) 
