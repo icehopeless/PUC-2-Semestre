@@ -1,0 +1,30 @@
+Maior substring 
+
+abcabcbb
+
+b == a 
+c == b, c == a  
+a == c, a == b, a == a BREAK;
+
+...
+
+
+podemos percorrer
+
+o tamanho-1
+
+abcabcbb -> tamanho = 7
+
+//percorre o array completo, e acada iteracao, faz a posicao ate o inicio para verificar se repetiu
+for(int i = 1; i < len; i++){
+	for(int j = i; j > 0; j--){
+		if(str[i] == str[j]){
+			break;
+		}
+	}
+	
+	strout[i] = str[i];
+}
+
+mais conveniente cuidar apenas dos indices do que montar uma string do 0 com a substring maior. 
+Criamos uma variavel maior que recebe atualizacoes com base no calculo i - (start + 1)
