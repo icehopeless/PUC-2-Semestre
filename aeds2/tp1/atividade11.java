@@ -29,7 +29,7 @@ public class atividade11{
 	}
 
 	public static void main(String[] args){
-		Scanner scan = new Scanner(System.in);
+		Scanner scan = new Scanner(System.in, "ISO-8859-1");
 		String line;
 
 		line = scan.nextLine();

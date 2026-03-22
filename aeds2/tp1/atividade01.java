@@ -24,7 +24,13 @@ public class atividade01{
 		//e necessario utilizar um array de caracter literal, pois a String em java e imutavel, e nao podemos alterar um caracter especifico que desejamos.
 		char[] chars = new char[str.length()];
 		for(int i = 0; i < str.length(); i++){
-			chars[i] = (char)(str.charAt(i) + key);
+		        char c = str.charAt(i);
+
+        		if(c >= 0 && c <= 127){
+            			chars[i] = (char)(c + key);
+        		} else {
+            			chars[i] = c; 
+        		}
 		}
 		
 		return new String(chars);
