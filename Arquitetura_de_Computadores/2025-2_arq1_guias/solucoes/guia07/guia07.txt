@@ -1,0 +1,75 @@
+Gabriel Agostinho da Silva
+903104
+
+(modificacoes... o mux e chamado dentro do modulo f7)
+
+1) - LU com operadores AND e NAND 
+
+Saida: 
+
+Guia_0701 - Gabriel Agostinho - 903104
+Test LU's module
+   x    y    s    w
+   0    1    0    0
+   0    1    1    1
+
+
+2) - LU com operadores OR e NOR
+
+Saida: 
+
+Guia_0702 - Gabriel Agostinho - 903104
+Test LU's module
+   x     y    s    w
+   0    1    0    1
+   0    1    1    0
+
+
+
+3) - LU para acesso de dois grupos distintos (AND e NAND) e (OR e NOR); Chave (2x1) para
+acessar os grupos e outra chave (2x1) para acessar entre o grupo selecionado.
+ 
+(1-NAND/NOR ;  0-AND/OR)
+(1-AND/NAND  ; 0-OR/NOR;)
+
+Saida:
+
+Guia_0703 - Gabriel Agostinho - 903104
+Test LU's module
+   x    y    s   s2   w
+   0    1    0    0    1
+   0    1    1    0    0
+   0    1    1    1    1
+   0    1    0    1    0
+
+
+
+4) - LU para acesso dos grupos (XOR e XNOR) e (OR e NOR) usando chave (4x1)
+
+(00-XOR; 01-XNOR, 10-NOR; 11-OR)
+
+Saida: 
+
+
+Guia_0704 - Gabriel Agostinho - 903104
+   x    y    s1    s0   w
+   0    1    0    0    1
+   0    1    0    1    1
+   0    1    1    0    0
+   0    1    1    1    0
+
+
+
+5) LU para NOT, AND, NAND, OR, NOR, XOR, XNOR, simultâneas, com apenas 1 saída, 
+selecionável (7x1). 
+
+Guia_0705 - Gabriel Agostinho - 903104
+   x    y    s0    s1   s2   w
+   0    1    0    0    0     1
+   0    1    1    0    0     0
+   0    1    0    1    0     1
+   0    1    1    1    0     0
+   0    1    0    0    1     1
+   0    1    1    0    1     1
+   0    1    0    1    1     0
+   0    1    1    1    1     1
