@@ -42,7 +42,7 @@ char * anagramaStr(char *str1, char *str2){
 
 	
        if(lengthStr(str1) != lengthStr(str2)){
-                return "NÃO";
+                return "NAO";
         }
 
 	for(int i = 0; i < lengthStr(str1); i++){
@@ -59,7 +59,7 @@ char * anagramaStr(char *str1, char *str2){
 			}
 		}
 		if(!aux){
-			return "NÃO";
+			return "NAO";
 		}
 	}
 
@@ -68,20 +68,18 @@ char * anagramaStr(char *str1, char *str2){
 
 
 int main(){
-	char str1[TAM], str2[TAM];
-	
-	//loop que quebra quando uma das strings forem igual a FIM 
-	while(1){
+    char linha[TAM], str1[TAM], str2[TAM];
+    
+    while(1){
 
-		scanf(" %[^ \n]", str1); //le a string ate um espaco ou \n
-		getchar(); //consome o \n
-		 if(strCompare(str1, "FIM")){
-                        break;
-                }
+        scanf(" %[^\n]", linha);
+  
+        if(strCompare(linha, "FIM")){
+            break;
+        }
 
-		getchar();
-		scanf(" %[^\n]", str2);
-		
-		printf("%s\n", anagramaStr(str1, str2));
-	}	
+        sscanf(linha, "%s %s", str1, str2);
+
+        printf("%s\n", anagramaStr(str1, str2));
+    }    
 }
