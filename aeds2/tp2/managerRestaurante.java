@@ -1,3 +1,6 @@
+import java.io.*;
+import java.util.*;
+
 class stringUtils{
 	protected static String[] splitS(String s, char regex){
 		String atual = "";
@@ -139,6 +142,22 @@ class Restaurante{
 	private boolean aberto;
 
 
+	public Restaurante(int id, String nome, String cidade, int capacidade, double avaliacao, String[] tipos_cozinha, int faixa_preco, Hora horario_abertura, Hora horario_fechamento, Data data_abertura, boolean aberto){
+		this.id = id;
+		this.nome = nome;
+		this.cidade = cidade;
+		this.capacidade = capacidade;
+		this.avaliacao = avaliacao;
+		this.tipos_cozinha = new String[tipos_cozinha.length()];
+		for(int i = 0; i < tipos_cozinha.length(); i++){
+			this.tipos_cozinha[i] = tipos_cozinha[i];
+		}
+		this.faixa_preco = faixa_preco;
+		this.horario_abertura = horario_abertura;
+		this.aberto = aberto;
+
+        }
+
 	public static Restaurante parseRestaurante(String s){
 		
 	}
@@ -158,6 +177,53 @@ class Restaurante{
 	}
 }
 
+class ColecaoRestaurantes extends stringUtils{
+	private int tamanho;
+	private Restaurante[] restaurantes;
+
+	public ColecaoRestaurantes(){
+		this.tamanho = 0;
+		this.restaurantes = new Restaurante[10];
+	}
+
+	public int getTamanho(){
+		return this.tamanho;
+	}
+	public Restaurante[] getRestaurantes(){
+		return this.restaurantes;
+	}
+
+	public void addRestaurante(int id, String nome, String cidade, int capacidade, double avaliacao, String[] tipos_cozinha, int faixa_preco, Hora horario_abertura, Hora horario_fechamento, Data data_abertura, boolean aberto){
+		restaurantes[tamanho] = new Restaurante(id, nome, cidade, capacidade, avaliacao, tipos_cozinha, faixa_preco, horario_abertura, horario_fechamento, data_abertura, aberto);	
+	}
+
+	public void readCsv(String path){
+		try{
+			Scanner scan = new Scanner(new File(path));
+			String line;
+			while(scan.hasNextLine()){
+				line = scan.nextLine();
+				if(line.length() < 0){
+					break;
+				}
+				
+				String[] slices = splitS(line, ',');
+				Restaurante r = new Restaurante(integer.ParseInt(slices[0]), slices[1], slices[2], integer.ParseInt(slice[3]), Double.parseDouble(slices[4]), 
+						splitS(slices[5], ';'), );
+
+			}
+
+			scan.close();
+
+		}catch(Exception e){
+			System.out.println("Erro ao ler o arquivo");
+		}
+	}
+
+	public static ColecaoRestaurantes readCsv(){
+		
+	}
+}
 
 public class managerRestaurante{
 	public static void main(String[] args){}
