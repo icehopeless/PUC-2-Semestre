@@ -1,18 +1,23 @@
 class stringUtils{
-	public static String[] splitS(String s, char regex){
-		int[] intervalos;
+	protected static String[] splitS(String s, char regex){
+		String atual = "";
 		int count = 0;
-		for(int i = 0; i < s.length(); i++ ){
-			if(s.charAt(i) == regex || s.charAt(i) == '\n'){
-				intervalos[count] = i;
+		String[] slices = new String[s.length()];
+
+		for(int i = 0; i < s.length(); i++){
+			char caracter = s.chatAt(i);
+			if(caracter == regex){
+				slices[count] = atual;
 				count++;
+				atual = "";
+			}else{
+				atual += caracter;
 			}
 		}
-
-	}
+		return slices;
 }
 
-class Hora{
+class Hora extends stringUtils{
 	private int hora;
 	private int minuto;
 
@@ -47,7 +52,11 @@ class Hora{
 	}
 
 	public static Hora parseHora(String s){
-		
+		String rtn = splitS(s, ':');
+		int hora = Integer.parseInt(rtn[0]);
+		int minuto = Integer.parseInt(rtn[1]);
+
+		return new Hora(hora, minuto);
 	}
 
 	public String formatar(){
@@ -57,10 +66,63 @@ class Hora{
 
 }
 
-class Data{
+class Data extends stringUtils{
 	private int dia;
 	private int mes;
 	private int ano;
+
+	public Data(){
+		dia = 0;
+		mes = 0;
+		ano = 0;
+	}
+
+	public Data(int dia, int mes, int ano){
+		this.dia = dia;
+		this.mes = mes;
+		this.ano = ano;
+	}
+
+	public void setDia(int dia){
+		this.dia = dia;
+	}
+
+	public void setMes(int mes){
+                this.mes = mes;
+        }
+
+	public void setAno(int ano){
+                this.ano = ano;
+        }
+
+	public int getDia(){
+		return this.dia;
+	}
+
+	public int getMes(){
+		return this.mes;
+	}
+
+	public int getAno(){
+		return this.ano;
+	}
+
+	public static Data parseData(String s){
+                String[] rtn = splitS(s, '/');
+                int dia = Integer.parseInt(rtn[2]);
+                int mes = Integer.parseInt(rtn[1]);
+                int ano = Integer.parseInt(rtn[0]);
+
+                return new Data(dia, mes, ano);
+
+	}
+
+	public String formatar(){
+		return this.dia + "/" + this.mes + "/" + this.ano;
+	}
+
+
+
 }
 
 class Restaurante{
@@ -70,13 +132,32 @@ class Restaurante{
 	private int capacidade;
 	private double avaliacao; //nota media
 	private String[] tipos_cozinha; //tipos de culinaria
-	private int faixa_preco;
+	private int faixa_preco; //expresso por $
 	private Hora horario_abertura;
 	private Hora horario_fechamento;
 	private Data data_abertura;
 	private boolean aberto;
 
+
+	public static Restaurante parseRestaurante(String s){
+		
+	}
+
+	public String formatar(){
+		return "[ => id" + this.id + 
+			" nome " + this.nome + 
+			" cidade " + this.cidade + 
+			" capacidade " + this.capacidade + 
+			" avaliacao " + this.avaliacao + 
+			gettipos_cozinha() + 
+			" faixa_preco " + this.faixa_preco + 
+			" horario_abertura  " + this.horario_abertura +
+			" horario_fechamento " + this.horario_fechamento +
+			" data_abertura " + this.data_abertura + 
+			" aberto " + this.aberto + "\n";
+	}
 }
+
 
 public class managerRestaurante{
 	public static void main(String[] args){}
