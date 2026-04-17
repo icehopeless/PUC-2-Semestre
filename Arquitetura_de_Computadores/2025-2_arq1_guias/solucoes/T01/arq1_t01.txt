@@ -1,0 +1,176 @@
+Gabriel Agostinho da Silva
+903104
+
+
+1) Ler Artigos - O CPLD (Dispositivo Complexo de Lógica Programação aplicado em automação industrial" 
+Tiago Tobias Freitas, Thiago Luiz Pasqualinoto e Juliano Carlos Leão 
+
+Resumindo, o artigo tem como intuito analisar o uso de CPLDs (Dispositivos logicos programaveis complexos)
+na automacao industrial, sendo visto como uma alternativa para os CLPs tradicionais. 
+A comparação é motivada pela velocidade que os CPLDs tem em comparação com os CPLs (ns vs ms), e principalemente o baixo custo,
+alem da possibilidade da reconfiguração (reprogramação). O estudo mostra que os CPLDs oferecem um bom equilibrio
+entre desempenho e custo. Para demonstrar a utilzação, foi apresentado o desenvolvimento de um controlador utilizando o CPLD, 
+aplicado numa planta didática que simula um processo industrial de recorte de placas e teste de qualidade.
+Concluindo que os CPLDs são uma opção viavel e estratégica para a automação de pequeno e médio porte.
+
+O artigo escolhido em minha preferencia:
+
+LINK: https://adelpha-api.mackenzie.br/server/api/core/bitstreams/db70eede-3588-435b-8031-ef5521d9ebe4/content
+
+GONÇALVES, João Vitor Bastos. Uso de controladores lógicos programáveis para controle de cargas críticas em condomínios. 2024. Trabalho acadêmico.
+ALMEIDA NETO, José Cesar de Souza (Orientador).
+
+Neste artigo, é analisado o uso de CLPs (Controladores logicos programaveis) para o controle de cargas eletricas
+em condominios, com foco na eficiencia energetica e fornecimento seguro para situações de emergencia.
+É integrado um sensor ultrassonic acoplado em um arduino par amonitorar o nivel de diesel de umg erador, enviando sinais ao CLP, 
+para que ele consiga gerenciar automaticamente as cargas conforme a quantidade de combustível disponivel.
+E para aplicar diante as emergencias, é priorizado equipamentos essenciais como luz (iluminação), elevadores e sistemas de segurança, como cameras e trancas.
+
+
+2.) Identificar a referência segundo os padrões de citação para artigo científico.
+
+Autores do artigo (autoria do objeto):
+Tiago Tobias Freitas
+Thiago Luiz Pasqualinoto
+Juliano Carlos Leão
+
+Orientador (autor acadêmico/orientação):
+Prof. Jeferson André Bigheti
+
+Evento/publicação:
+Feira SENAI Paulista de Inovação Tecnológica – INOVASENAI
+
+Local e ano:
+Lençóis Paulista – 2005
+
+
+Referências utilizadas no artigo:
+CHAN (1994)
+RIBEIRO (2002)
+BROWN (1996)
+SHACKELFORD (2000)
+
+- Conforme Chan (1994), as ferramentas EDA e linguagens de descrição de hardware simplificaram e aceleraram o desenvolvimento de circuitos digitais.
+- Segundo Ribeiro (2002), o mercado de PLDs está em expansão, exigindo que o projetista escolha o dispositivo mais adequado às suas necessidades.
+- De acordo com Brown (1996), as memórias PROM são uma arquitetura ineficiente para implementação de circuitos lógicos.
+- Segundo Shackelford (2000), os FPGAs permitem modificar o hardware conforme a necessidade, diferentemente dos ASICs.
+
+
+No artigo escolhido:
+
+Autor do artigo:
+João Vitor Bastos Gonçalves
+
+Orientador:
+José Cesar de Souza Almeida Neto
+
+Principais citacoes utilizadas no artigo:
+
+ROSALES et al. (2023)
+- Conforme Rosales et al. (2023), sistemas resilientes devem minimizar impactos de falhas de energia e restaurar rapidamente o serviço.
+
+DAISSAOUI et al. (2020)
+Segundo Daissaoui et al. (2020), a Internet das Coisas é um elemento fundamental em edifícios inteligentes.
+
+PRUDENTE (2011)
+De acordo com Prudente (2011), microCLPs são utilizados em aplicações residenciais como iluminação e portões automáticos.
+
+COELHO (2017)
+Segundo Coelho (2017), sistemas de controle de iluminação são essenciais para eficiência energética em edifícios.
+
+MARQUESE et al. (2021)
+Conforme Marquese et al. (2021), geradores de emergência são fundamentais para garantir energia em edifícios críticos.
+
+FRANCHI (2020)
+Segundo Franchi (2020), o CLP é um sistema digital programável utilizado no controle de processos industriais.
+
+BOLTON (2015)
+Segundo Bolton (2015), os CLPs reduzem a necessidade de fiação e facilitam modificações no sistema.
+
+PETRUZELLA (2011)
+De acordo com Petruzella (2011), os CLPs oferecem maior confiabilidade e flexibilidade em sistemas de controle.
+
+
+3.) Segundo os textos recomendados, definir e caracterizar 
+
+ASIC (Application-Specific Integrated Circuit)
+Se trata de um circuito integrado projeto para atender uma aplicação específica.
+Tem alta eficiencia e desempenho, mas somente para auela aplicação que foi desenvolvido
+Alto custo para ser desenvolvido, e nao é reprogramável.
+É utilizado quando o projeto é fixo (nao tem variacoes) e em larga escala.
+
+ASSP (Application-Specific Standard Product)
+É semelyhante ao ASIC, porem, é mais utilizado para uma aplicação específica que é comum a vários usuários.
+Ainda é nichada a um tipo de projeto/arquitetura
+É mais barato que o ASIC.
+
+SPLD (Simple Programmable Logic Device)
+Dispositivo lógico programável simples (PAL, PLA)
+Tem baixa capacidade, entretanto, tem um custo menor.
+Facil de usar e programar e é utilizado em circuitos pequenos.
+
+
+CPLD (Complex Programmable Logic Device) Retratado no artigo
+É evolução dos SPLDs, porém, com maior capacidade e maior integração
+Tem alta velocidade (casa de nanosegundos)
+É reprogramável, e tem uma estrutura fixa, sendo ideal para controle e automação
+É uma alternativa muito competitiva e estratégica para ser utilizada no ambito de 
+automação industrial, como ja foi retratado no artigo.
+
+SOC (System on a Chip)
+Como o nome ja diz, um sistema completo dentro de um chip único
+inclui cpu e memorias, assim como num sistema comum.
+Alto nível de integração. 
+Muito utilizado em celulares e sistemas embarcados.
+
+FPGA (Field Programmable Gate Array)
+Dispositivo programável com alta capacidade e flexibilidade, porém, com custo elevado
+sendo mais caro que os CPLD.
+Alto desempenho paralelo.
+Totalmente reconfigurável
+
+de forma resumida, os ASICs e ASSP sao fixos. Os SPLD, CPLD e FPGA sao programáveis
+e o SOC é um sistema completo que esta integrado em um chip
+
+
+4.) Diferenciar (sugestão: montar uma tabela) entre PROM PLA E PAL. Será usado as caracteristicas Estrutura, flexibilidade, velocidade de op.,
+custo, nivel de programação e aplicação principal
+
+
+CARACTERISTICA              PROM                PLA             PAL
+-----------------------------------------------------------------------------------------
+Custo                       baixo               Alto            medio
+
+Estrutura               AND fixo e          AND e OR Progra   AND programavel e 
+                        OR programavel      maveis            OR fixo
+
+Velocidade                  media               lenta           rápida
+
+Flexibilidade               baixa               alta            média
+
+Nivel de Programação        limitada            Complexa        mais simples
+
+Aplicação Principal     Lógica simples      Lógica complexa    Lógica prática e rapida
+
+
+
+5.) Diferenciar (sugestão: montar uma tabela) entre CPLD E FPGA (Dispositivos Logicos programaveis)
+
+
+
+CARACTERISTACA                  CPLD                                    FPGA
+---------------------------------------------------------------------------------------------
+
+Estrutura               Blocos logicos maiores          Muitos blocos menores distribuidos
+
+Velocidade                Alta com tempo fixo                       Alta e variável
+
+Custo                        Mais barato                            Mais caro
+
+Capacidade                      Menor                               Muito maior
+
+Cap. de Reprogramação       Reprogramável                           Reprogramável
+
+Aplicação Principal     Automação, lógica simples           Sistemas com plexos e processamento 
+                                                              mais pesado, ocorre em paralelo
+
