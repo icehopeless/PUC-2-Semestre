@@ -1,0 +1,60 @@
+Gabriel Agostinho da Silva
+903104
+
+
+1) Somador completo usando meia soma
+
+saida: 
+
+x       y     | soma    carry
+000000 000000 | 000000   0
+000101 000011 | 001000   0
+001111 000001 | 010000   0
+100001 000001 | 100010   0
+
+
+2) Subtrator completo usando meio subtrator
+
+saida:
+
+x       y     | dif     borrow
+000101 000011 | 000010   0
+000011 000101 | 111110   1
+001111 000001 | 001110   0
+100001 000001 | 100000   0
+
+
+3) igualdade usando xnor
+
+saida: 
+
+x       y     | igual
+000000 000000 |   1
+000101 000101 |   1
+000101 000100 |   0
+111111 111111 |   1
+100001 100000 |   0
+
+
+4) desigualdade com xor
+
+saida:
+
+x       y     | not igual
+000000 000000 |   0
+000101 000101 |   0
+000101 000100 |   1
+111111 111111 |   0
+100001 100000 |   1
+
+
+5) Calcular complemento de 2 com somador completo
+
+saida: 
+
+x       | ~x    | cpl2(x)
+000001 | 111110 | 111111
+000010 | 111101 | 111110
+000101 | 111010 | 111011
+001000 | 110111 | 111000
+
