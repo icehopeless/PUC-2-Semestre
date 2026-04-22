@@ -2,13 +2,14 @@ import java.io.*;
 import java.util.*;
 
 class stringUtils{
+/*
 	protected static String[] splitS(String s, char regex){
 		String atual = "";
 		int count = 0;
 		String[] slices = new String[s.length()];
 
 		for(int i = 0; i < s.length(); i++){
-			char caracter = s.chatAt(i);
+			char caracter = s.charAt(i);
 			if(caracter == regex){
 				slices[count] = atual;
 				count++;
@@ -18,6 +19,55 @@ class stringUtils{
 			}
 		}
 		return slices;
+	}
+*/
+	protected static String[] splitS(String s, char regex) {
+	    
+	    int parts = 1;
+	    for (int i = 0; i < s.length(); i++) {
+	        if (s.charAt(i) == regex) parts++;
+	    }
+	
+	    String[] slices = new String[parts];
+	    String atual = "";
+	    int count = 0;
+	    for (int i = 0; i < s.length(); i++) {
+	        char caracter = s.charAt(i);
+	        if (caracter == regex) {
+	            slices[count++] = atual;
+	            atual = "";
+	        } else {
+	            atual += caracter;
+	        }
+	    }
+	    	slices[count] = atual;
+    		return slices;
+	}
+
+	protected static int countChar(String s, char regex){
+		int count = 0;
+		for(int i = 0; i < s.length(); i++){
+			if(s.charAt(i) == regex){
+				count++;
+			}
+		}
+		return count;
+	}
+
+	protected String arrayToString(String[] array) {
+	    String s = "[";
+
+	    for (int i = 0; i < array.length; i++) {
+	        s += array[i];
+
+	        if (i < array.length - 1) {
+        	    s += ", ";
+	        }
+	    }
+
+	    s += "]";
+	    return s;
+	}
 }
 
 class Hora extends stringUtils{
@@ -55,7 +105,7 @@ class Hora extends stringUtils{
 	}
 
 	public static Hora parseHora(String s){
-		String rtn = splitS(s, ':');
+		String[] rtn = splitS(s, ':');
 		int hora = Integer.parseInt(rtn[0]);
 		int minuto = Integer.parseInt(rtn[1]);
 
@@ -111,7 +161,7 @@ class Data extends stringUtils{
 	}
 
 	public static Data parseData(String s){
-                String[] rtn = splitS(s, '/');
+                String[] rtn = splitS(s, '-');
                 int dia = Integer.parseInt(rtn[2]);
                 int mes = Integer.parseInt(rtn[1]);
                 int ano = Integer.parseInt(rtn[0]);
@@ -128,7 +178,7 @@ class Data extends stringUtils{
 
 }
 
-class Restaurante{
+class Restaurante extends stringUtils{
 	private int id;
 	private String nome;
 	private String cidade;
@@ -148,34 +198,162 @@ class Restaurante{
 		this.cidade = cidade;
 		this.capacidade = capacidade;
 		this.avaliacao = avaliacao;
-		this.tipos_cozinha = new String[tipos_cozinha.length()];
-		for(int i = 0; i < tipos_cozinha.length(); i++){
+		this.tipos_cozinha = new String[tipos_cozinha.length];
+		for(int i = 0; i < tipos_cozinha.length; i++){
 			this.tipos_cozinha[i] = tipos_cozinha[i];
 		}
 		this.faixa_preco = faixa_preco;
 		this.horario_abertura = horario_abertura;
+		this.horario_fechamento = horario_fechamento;
+		this.data_abertura = data_abertura;
 		this.aberto = aberto;
 
         }
 
-	public static Restaurante parseRestaurante(String s){
+/*	public static Restaurante parseRestaurante(String s){
+		String[] slices = splitS(line, ',');
+                return new Restaurante(integer.ParseInt(slices[0]), slices[1], slices[2], integer.ParseInt(slices[3]), Double.parseDouble(slices[4]), 
+			splitS(slices[5], ';'), countChar(slices[6]), '$'), Hora.parseHora(slices[7], Hora.parseHora(8), Data.parseData(slices[9]), Boolean.parseBoolean(slices[10]));
 		
 	}
+*/
+	public static Restaurante parseRestaurante(String s){
+	    String[] slices = splitS(s, ',');
+	    String[] horas = splitS(slices[7], '-');
+
+	    return new Restaurante(
+	        Integer.parseInt(slices[0]),
+	        slices[1],
+	        slices[2],
+	        Integer.parseInt(slices[3]),
+	        Double.parseDouble(slices[4]),
+	        splitS(slices[5], ';'),
+	        countChar(slices[6], '$'),
+	        Hora.parseHora(horas[0]),
+		Hora.parseHora(horas[1]),
+	        Data.parseData(slices[8]),
+        	Boolean.parseBoolean(slices[9]));
+	}
+
+	public String[] gettipos_cozinha(){
+		return this.tipos_cozinha;
+	}
+
+	public int getId(){
+		return this.id;
+	}
+
+	public String getNome(){
+		return this.nome;
+	}
+
+	public String getCidade(){
+		return this.cidade;
+	}
+
+	public int getCapacidade(){
+		return this.capacidade;
+	}
+
+	public Double getAvalicao(){
+		return this.avaliacao;
+	}
+
+	public String getFaixaPreco(){
+		String s = "";
+		for(int i = 0; i < faixa_preco; i++){
+			s+="$";
+		}
+
+		return s;
+	}
+
+	public Hora getHorarioAbertura(){
+		return this.horario_abertura;
+	}
+	
+	public Hora getHorarioFechamento(){
+		return this.horario_fechamento;
+	}
+
+	public Data getDataAbertura(){
+		return this.data_abertura;
+	}
+
+	public boolean getAberto(){
+		return this.aberto;
+	}
+
+	public void setId(int id){
+		this.id = id;
+	}
+	
+	public void setNome(String s){
+		this.nome = s;
+	}
+
+	public void setCidade(String s){
+		this.cidade = s;
+	}
+
+	public void setCapacidade(int capacidade){
+		this.capacidade = capacidade;
+	}
+
+	public void setAvaliacao(double nota){
+		this.avaliacao = nota;
+	}
+
+	public void setTiposCozinha(String[] s){
+		for(int i = 0; i < tipos_cozinha.length; i++){
+                        this.tipos_cozinha[i] = s[i];
+                }
+
+	}
+	
+	public void setFaixaPreco(String s){
+		faixa_preco = countChar(s, '$');
+	}
+
+	public void setHorarioAbertura(Hora hora){
+		this.horario_abertura = hora;
+	}
+
+	public void setHorarioFechamento(Hora hora){
+		this.horario_fechamento = hora;
+	}
+
+	public void setDataAbertura(Data data){
+		this.data_abertura = data;
+	}
+
+	public void setAberto(boolean aberto){
+		this.aberto = aberto;
+	}
+
+	
 
 	public String formatar(){
-		return "[ => id" + this.id + 
-			" nome " + this.nome + 
-			" cidade " + this.cidade + 
-			" capacidade " + this.capacidade + 
-			" avaliacao " + this.avaliacao + 
-			gettipos_cozinha() + 
-			" faixa_preco " + this.faixa_preco + 
-			" horario_abertura  " + this.horario_abertura +
-			" horario_fechamento " + this.horario_fechamento +
-			" data_abertura " + this.data_abertura + 
-			" aberto " + this.aberto + "\n";
+		String s = "";
+		for (int i = 0; i < (int) avaliacao; i++) {
+    			s += "$";
+		}
+		
+
+		return "[" + this.id + " " 
+	   		+ this.nome + " " 
+			+ this.cidade + " "
+		    	+ this.capacidade + " " 
+			+ this.avaliacao + " "
+			+ arrayToString(this.tipos_cozinha) + " "
+		    	+ s + " "
+		    	+ this.horario_abertura.formatar() + " "
+		    	+ this.horario_fechamento.formatar() + " "
+		    	+ this.data_abertura.formatar() + " "
+		    	+ this.aberto + "]\n";
 	}
 }
+
 
 class ColecaoRestaurantes extends stringUtils{
 	private int tamanho;
@@ -193,38 +371,65 @@ class ColecaoRestaurantes extends stringUtils{
 		return this.restaurantes;
 	}
 
-	public void addRestaurante(int id, String nome, String cidade, int capacidade, double avaliacao, String[] tipos_cozinha, int faixa_preco, Hora horario_abertura, Hora horario_fechamento, Data data_abertura, boolean aberto){
-		restaurantes[tamanho] = new Restaurante(id, nome, cidade, capacidade, avaliacao, tipos_cozinha, faixa_preco, horario_abertura, horario_fechamento, data_abertura, aberto);	
+	private void aumentarCapacidade(){
+		Restaurante[] novo = new Restaurante[this.restaurantes.length * 2];
+
+		for(int i = 0; i < this.restaurantes.length; i++){
+			novo[i] = this.restaurantes[i];
+		}
+
+		this.restaurantes = novo;
 	}
 
 	public void readCsv(String path){
 		try{
 			Scanner scan = new Scanner(new File(path));
 			String line;
+			line = scan.nextLine();
 			while(scan.hasNextLine()){
 				line = scan.nextLine();
-				if(line.length() < 0){
+				if(line.length() == 0){
 					break;
 				}
 				
-				String[] slices = splitS(line, ',');
-				Restaurante r = new Restaurante(integer.ParseInt(slices[0]), slices[1], slices[2], integer.ParseInt(slice[3]), Double.parseDouble(slices[4]), 
-						splitS(slices[5], ';'), );
+				if(tamanho == restaurantes.length){
+					aumentarCapacidade();
+				}
+
+				this.restaurantes[tamanho] = Restaurante.parseRestaurante(line);
+				tamanho++;
 
 			}
 
 			scan.close();
 
 		}catch(Exception e){
+			e.printStackTrace();
 			System.out.println("Erro ao ler o arquivo");
 		}
 	}
 
 	public static ColecaoRestaurantes readCsv(){
-		
+		ColecaoRestaurantes colecao = new ColecaoRestaurantes();
+		colecao.readCsv("/tmp/restaurantes.csv");
+		return colecao;
+
 	}
 }
 
 public class managerRestaurante{
-	public static void main(String[] args){}
+	public static void main(String[] args){
+		Scanner scan = new Scanner(System.in);
+		int n = 0;
+		ColecaoRestaurantes colecao = ColecaoRestaurantes.readCsv();
+		Restaurante[] restaurantes = colecao.getRestaurantes();
+	
+		while(scan.hasNextInt()){
+			n = scan.nextInt();
+			if(n == -1){
+				break;
+			}
+			System.out.println(restaurantes[n-1].formatar());
+		}
+	}
 } 
