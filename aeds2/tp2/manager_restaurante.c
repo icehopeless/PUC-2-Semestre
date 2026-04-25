@@ -52,7 +52,7 @@ char * remove_char(char * s, char c){
 		if (s[i] == c) {
                         s[i] = '\0';
                         break;
-                }
+               }
         }
 	return s;
 }
@@ -158,6 +158,7 @@ Restaurante * parse_restaurante(char * s){
 	restaurante->horario_abertura = parse_hora(horas[0]);
 	restaurante->horario_fechamento = parse_hora(horas[1]);
 	restaurante->data_abertura = parse_data(partes[8]);
+
 	if(strcmp("true", partes[9]) == 0){
 		restaurante->aberto = 1;
 	}else{
@@ -214,6 +215,10 @@ void formatar_restaurante(Restaurante * r, char * buffer){
 			data,
 			boolean
 			);
+
+	free(hora_abertura);
+	free(hora_fechamento);
+	free(data);
 }
 
 typedef struct Colecao_Restaurantes{
@@ -265,18 +270,24 @@ Colecao_Restaurantes * ler_csv(){
 
 int main(){
 	int n = 1;
-	char * buffer = malloc(256 * sizeof(char));
+	char * buffer = malloc(1024 * sizeof(char));
 
 	Colecao_Restaurantes *colecao = malloc(sizeof(Colecao_Restaurantes));
 	colecao = ler_csv();
 
-	while(n > 0){
-		scanf("%d",&n);
-		formatar_restaurante(colecao->restaurantes[n-1], buffer);
-		printf("%s\n", buffer);
-
-	}
+	while (1) {
+	    if (scanf("%d", &n) != 1) break;
+	    if (n <= 0) break;
 	
+	    if (n <= colecao->tamanho) {
+	        formatar_restaurante(colecao->restaurantes[n-1], buffer);
+	        printf("%s", buffer);
+	    }
+	}
+
+
+	free(colecao);	
+	free(buffer);
 	return 0;
 }
 

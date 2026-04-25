@@ -61,7 +61,7 @@ class stringUtils{
 	        s += array[i];
 
 	        if (i < array.length - 1) {
-        	    s += ", ";
+        	    s += ",";
 	        }
 	    }
 
@@ -350,7 +350,7 @@ class Restaurante extends stringUtils{
 		    	+ this.horario_abertura.formatar() + "-"
 		    	+ this.horario_fechamento.formatar() + " ## "
 		    	+ this.data_abertura.formatar() + " ## "
-		    	+ this.aberto + "]\n";
+		    	+ this.aberto + "]";
 	}
 }
 
