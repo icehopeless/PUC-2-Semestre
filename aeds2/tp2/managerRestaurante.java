@@ -113,7 +113,7 @@ class Hora extends stringUtils{
 	}
 
 	public String formatar(){
-		return this.hora + ":" +this.minuto;
+		return String.format("%02d:%02d", this.hora, this.minuto);
 	}
 
 
@@ -171,7 +171,7 @@ class Data extends stringUtils{
 	}
 
 	public String formatar(){
-		return this.dia + "/" + this.mes + "/" + this.ano;
+		return String.format("%02d/%02d/%d", this.dia, this.mes, this.ano);
 	}
 
 
@@ -335,21 +335,21 @@ class Restaurante extends stringUtils{
 
 	public String formatar(){
 		String s = "";
-		for (int i = 0; i < (int) avaliacao; i++) {
+		for (int i = 0; i < this.faixa_preco; i++) {
     			s += "$";
 		}
 		
 
-		return "[" + this.id + " " 
-	   		+ this.nome + " " 
-			+ this.cidade + " "
-		    	+ this.capacidade + " " 
-			+ this.avaliacao + " "
-			+ arrayToString(this.tipos_cozinha) + " "
-		    	+ s + " "
-		    	+ this.horario_abertura.formatar() + " "
-		    	+ this.horario_fechamento.formatar() + " "
-		    	+ this.data_abertura.formatar() + " "
+		return "[" + this.id + " ## " 
+	   		+ this.nome + " ## " 
+			+ this.cidade + " ## "
+		    	+ this.capacidade + " ## " 
+			+ this.avaliacao + " ## "
+			+ arrayToString(this.tipos_cozinha) + " ## "
+		    	+ s + " ## "
+		    	+ this.horario_abertura.formatar() + "-"
+		    	+ this.horario_fechamento.formatar() + " ## "
+		    	+ this.data_abertura.formatar() + " ## "
 		    	+ this.aberto + "]\n";
 	}
 }

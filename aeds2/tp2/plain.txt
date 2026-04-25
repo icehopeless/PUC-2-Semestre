@@ -1,0 +1,8 @@
+[japonesa,francesa]
+
+- preciso saber o tamanho, e unir na string conforme ele.
+
+o tamanho e dado por n_tipos_cozinha
+
+preciso de uma funcao que recebe uma string base e uma string que sera adicionada, e retorna outra com as duas juntas1 - realloc na string base com o tamanho dela, + a substring
+2 - adicionar a substring na base, e adicionar o \0 no fim 

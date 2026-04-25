@@ -27,7 +27,7 @@ char ** split_string(char * s, char * regex, int * tam){
 	int aux = 0;
 
 	for (int i = 0; i < len; i++) {
-        	string[i] = (char *) malloc(100 * sizeof(char));
+        	string[i] = (char *) malloc(256 * sizeof(char));
     	}
 
 	for(int i = 0; i < len; i++){
@@ -57,6 +57,35 @@ char * remove_char(char * s, char c){
 	return s;
 }
 
+char * str_modify(char * base, char * str){
+	int len_base = length_str(base);
+        int len_str = length_str(str);
+
+	base = realloc(base, len_base + len_str + 2);
+	int aux = len_base;
+	base[aux] = ',';
+	aux++;
+
+	for(int i = 0; i < len_str; i++){
+		base[aux+i] = str[i];
+	}
+
+	base[len_base+len_str+1] = '\0';
+
+	return base;
+}
+
+char * str_copy(char * str, char * str2){
+	str = realloc(str, length_str(str2) + 1);
+
+	for(int i = 0; i < length_str(str2); i++){
+		str[i] = str2[i];
+	}
+	str[length_str(str2)] = '\0';
+	
+	return str;
+}
+
 typedef struct Hora{
 	int hora;
 	int minuto;
@@ -73,7 +102,7 @@ Hora parse_hora(char * s){
 }
 
 void formatar_hora(Hora * hora, char * buffer){
-	sprintf(buffer, "%d:%d", hora->hora, hora->minuto);
+	sprintf(buffer, "%02d:%02d", hora->hora, hora->minuto);
 }
 
 typedef struct Data{
@@ -93,7 +122,7 @@ Data parse_data(char * s){
 }
 
 void formatar_data(Data * data, char * buffer){
-	sprintf(buffer, "%d/%d/%d/", data->dia, data->mes, data->ano);
+	sprintf(buffer, "%02d/%02d/%02d", data->dia, data->mes, data->ano);
 }
 
 typedef struct Restaurante{
@@ -125,7 +154,7 @@ Restaurante * parse_restaurante(char * s){
 	restaurante->avaliacao = atof(partes[4]);
 	restaurante->tipos_cozinha = split_string(partes[5], ";", &tam);
 	restaurante->n_tipos_cozinha = tam; 
-	restaurante->faixa_preco = length_str(partes[6])-1;
+	restaurante->faixa_preco = length_str(partes[6]);
 	restaurante->horario_abertura = parse_hora(horas[0]);
 	restaurante->horario_fechamento = parse_hora(horas[1]);
 	restaurante->data_abertura = parse_data(partes[8]);
@@ -155,20 +184,31 @@ void formatar_restaurante(Restaurante * r, char * buffer){
 		boolean = "false";
 	}
 
-
-	char * tipos_str = malloc (256 * sizeof(char));
-	for(int i = 0; i < r->n_tipos_cozinha;i++){
-	
+	char faixa_preco[5];
+	for(int i = 0; i < r->faixa_preco;i++){
+		faixa_preco[i] = '$';
 	}
 
-	sprintf(buffer, "[%d %s %s %d %f [%s] %d %s-%s %s %s]\n",
+	faixa_preco[r->faixa_preco] = '\0';	
+
+	char * tipos_str = NULL;
+	tipos_str = str_copy(tipos_str, r->tipos_cozinha[0]);
+	if(r->n_tipos_cozinha > 1){
+		for(int i = 1; i < r->n_tipos_cozinha; i++){
+			tipos_str = str_modify(tipos_str, r->tipos_cozinha[i]);
+			                        
+
+		}
+	}
+
+	sprintf(buffer, "[%d ## %s ## %s ## %d ## %.1f ## [%s] ## %s ## %s-%s ## %s ## %s]\n",
 			r->id,
 			r->nome,
 			r->cidade,
 			r->capacidade,
 			r->avaliacao,
 			tipos_str,
-			r->faixa_preco,
+			faixa_preco,
 			hora_abertura,
 			hora_fechamento,
 			data,
@@ -224,13 +264,13 @@ Colecao_Restaurantes * ler_csv(){
 }
 
 int main(){
-	int n = 0;
+	int n = 1;
 	char * buffer = malloc(256 * sizeof(char));
 
 	Colecao_Restaurantes *colecao = malloc(sizeof(Colecao_Restaurantes));
 	colecao = ler_csv();
 
-	while(n != -1){
+	while(n > 0){
 		scanf("%d",&n);
 		formatar_restaurante(colecao->restaurantes[n-1], buffer);
 		printf("%s\n", buffer);
