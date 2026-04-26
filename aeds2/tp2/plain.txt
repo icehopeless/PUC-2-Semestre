@@ -68,4 +68,6 @@ Diminuir o tamanho do vetor (ordenacao propriamente dita)
 - pegar a raiz e jogar para o fim do vetor, para ordenar
 
 
+Lista Sequencial
+
 
