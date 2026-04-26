@@ -12,3 +12,6 @@ string.h
 e sscanf()
 
 Utilizar camel case em java
+
+canl com videos usados de referencia : 
+https://www.youtube.com/@leguarino
