@@ -24,4 +24,19 @@ em cada execucao do loop, ele ira procurar o menor elemento.
 
 depois disso, sera trocado com uma variavel temp entre, adicionando-o na parte ordenada.
 
-no caso  
+no caso
+
+
+insertion sort
+
+percorre o vetor, e em cada passo, retira um elemento da parte nao ordenada 
+e procura seu devido lugar na parte ordenada.
+
+para adicionar o elemento na posicao certa, precisamos mover os outros elementos para abrir espaco.
+
+logica para abrir espaco em um vetor:
+
+ate achar a posicao correta, o algoritmo precisa mover a posicao comparada para direita
+
+para isso, colocaremos o objeto numa variavel temporaria, e movemos a posicao anterior para frente  
+
