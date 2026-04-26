@@ -50,3 +50,22 @@ Precisa verificar se o elemento do meio e o procurado;
 esse algoritmo ira continuar ate que haja espaco de busca ou o elemento seja encontrado
 
 
+
+heap sort
+
+montar o max-heap:
+- percorre ate a metade do vetor para montar o heap;
+- elemento pai maior que os filhos.
+- filho da esq = i*2+1
+- filho da dir = i*2+2
+
+Funcao para aplicar o heap
+- faz a troca comparando raiz com os dois filhos.
+- faz a chamada recursiva da funcao aplicar heap, toda vez que a raiz mudar, para que possa ordenar
+- 
+
+Diminuir o tamanho do vetor (ordenacao propriamente dita)
+- pegar a raiz e jogar para o fim do vetor, para ordenar
+
+
+
