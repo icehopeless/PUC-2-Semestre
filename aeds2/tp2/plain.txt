@@ -40,3 +40,13 @@ ate achar a posicao correta, o algoritmo precisa mover a posicao comparada para 
 
 para isso, colocaremos o objeto numa variavel temporaria, e movemos a posicao anterior para frente  
 
+
+Pesquisa binaria
+
+ordena o vetor
+
+divide o vetor em 2, pergunta qual lado esta contido a chave de busca, subdivide o vetor novamente e faz o mesmo procedimento, ate encontrar o atributo buscado;
+Precisa verificar se o elemento do meio e o procurado;
+esse algoritmo ira continuar ate que haja espaco de busca ou o elemento seja encontrado
+
+
