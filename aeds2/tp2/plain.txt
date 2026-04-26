@@ -5,4 +5,23 @@
 o tamanho e dado por n_tipos_cozinha
 
 preciso de uma funcao que recebe uma string base e uma string que sera adicionada, e retorna outra com as duas juntas1 - realloc na string base com o tamanho dela, + a substring
-2 - adicionar a substring na base, e adicionar o \0 no fim 
+2 - adicionar a substring na base, e adicionar o \0 no fim
+
+
+select Sort
+
+Procura o menor elemento no vetor todo
+troca a posicao do menor com o primeiro 
+
+oque deve fazer
+varrer o vetor verificando o melhor elemento, e salvando os menores em uma variavel
+quando terminar o loop, trocar de posicao para a parte ordenada.
+
+Teremos um loop que vai percorrer o vetor todo. Ele sera indexado a uma variavel que controla a parte ordenada,
+para que nao precise percorer o vetor completo.
+
+em cada execucao do loop, ele ira procurar o menor elemento.
+
+depois disso, sera trocado com uma variavel temp entre, adicionando-o na parte ordenada.
+
+no caso  
