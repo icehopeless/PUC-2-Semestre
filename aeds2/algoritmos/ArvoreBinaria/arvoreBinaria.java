@@ -54,7 +54,18 @@ public class arvoreBinaria<T extends Comparable<T>>{
 	}
 
 	public boolean remove(T valor){
+		Elemento<T> elemento  = new Elemento<T>(valor);
+		Elemento<T> atual = this.raiz;
+		Elemento<T> pai = null;
 
+		if(atual.getValor() == valor){
+			pai = atual;
+			atual = atual.getDir();
+			while(atual.getEsq()!= null){
+				atual = atual.getEsq();
+			}
+			pai = atual;	
+		}
 	}
 
 	void print(){
