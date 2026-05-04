@@ -1,0 +1,40 @@
+Gabriel Agostinho da Silva
+903104
+
+
+1) interpretando a tabela para maquina de mealy:
+
+estado atual e inicial = 0 
+
+x = 0 (entrada 0)
+(1,0)(o primeiro é a entrada, o segundo é a saida) o proximo estado é 1(q1), com link do tipo (0,0):
+
+q0 --0/0--> q1
+
+x = 1 (entrada 1)
+(0,0) o proximo estado é 1(q0), com link do tipo (1,0):
+
+q0 --1/0--> q0
+
+2) cada estado a tem a saida pre definida. A relacao entre os estados e dado pela entrada
+
+q0 --0--> q0
+q0 --1--> q3
+
+na tabelas podemos observar o estado, a entrada (x = 0 ou x = 1), o proximo estado onde sera estabelecido a relacao, e a saida.
+
+3) É pedido o CPL1 de todos os bits, exceto do ultimo a da direita
+
+o cpl1 é a inversao de todos os bits, entao para 1101 -> 0011.
+
+
+4) para montar as sequencias 010 ou 101
+
+cada estado se perguntara se a entrada é = 0 ou = 1.
+Sera montado de forma logica para manter na "memoria" cada artefato das sequencias (010 ou 101)
+se a sequencia for quebrada em algum estado, ele vai se manter parado.
+
+
+5) Tem uma logica parecida com a questao anterior, porem, para a sequencia 1001 e na estrutura de pilha
+A pilha so vai empilhar quando achar a sequencia 1001. 
+O resultado final vai ser a quantidade de veses que a ocorrencia 1001 tem na entrada.
