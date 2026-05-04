@@ -58,17 +58,24 @@ public class arvoreBinaria<T extends Comparable<T>>{
 		Elemento<T> atual = this.raiz;
 		Elemento<T> pai = null;
 
-		if(atual.getValor() == valor){
-			pai = atual;
-			atual = atual.getDir();
-			while(atual.getEsq()!= null){
-				atual = atual.getEsq();
+		if(this.raiz.getValor() != valor){
+			while(atual != null){//logica para percorrer e achar o elemento na arvore
+				pai = atual;
+				if(atual.getValor() < valor){
+					atual = atual.getEsq();
+				}
+				else if(atual.getValor() > valor){
+					atual = atual.getDir();
+				}
+			
 			}
-			pai = atual;	
-		}
+		}else{
+		//logica pra quando o elemento ta na raiz
+		}	
+
 	}
 
-	void print(){
+	public void print(){
 	
 	}
 
