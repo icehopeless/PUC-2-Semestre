@@ -19,7 +19,7 @@ void inserir_inicio(Lista *l, Restaurante *r){
 	l->inicio->prox = novo;
 
 	l->tamanho++;
-	
+	free(novo);
 }
 
 
@@ -40,6 +40,7 @@ void inserir(Lista *l, Restaurante *r, int pos){
 	atual->prox = novo;
 
 	l->tamanho++;
+	free(novo);
 }
 
 void inserir_fim(Lista *l,Restaurante *r){
@@ -54,8 +55,51 @@ void inserir_fim(Lista *l,Restaurante *r){
 
 	atual->prox = novo;
 	l->tamanho++;
+	free(novo);
 }
 
-Restaurante remover_inicio(){}
-Restaurante remover(int pos){}
-Restaurante remover_fim(){}
+Restaurante remover_inicio(Lista *l){
+	Restaurante r;
+	No *aux = l->inicio->prox;
+	r = aux->r;
+	l->inicio->prox = aux->prox;
+
+
+	l->tamanho--;
+	free(aux);
+	return r;
+}
+
+Restaurante remover(Lista *l, int pos){
+	Restaurante r;
+	No *aux;
+	No *atual = l->inicio;
+
+	for(int i = 0; i < pos; i++){
+		atual = atual->prox;
+	}
+	
+	aux = atual->prox;
+	atual->prox = aux->prox;
+	free(aux);
+	l->tamanho--;
+	return r;
+}
+
+Restaurante remover_fim(Lista *l){
+        Restaurante r;
+        No *atual = l->inicio;
+	No *aux;
+        for(int i = 0; i < l->tamanho-1; i++){
+                atual = atual->prox;
+        }
+
+        aux = atual->prox;
+	r = aux->r;
+
+	atual->prox = NULL;
+	free(aux);
+        l->tamanho--;
+        return r;
+
+}
