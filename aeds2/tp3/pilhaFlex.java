@@ -1,4 +1,4 @@
-public class No{
+class No{
 	private No prox;
 	private Restaurante r;
 
