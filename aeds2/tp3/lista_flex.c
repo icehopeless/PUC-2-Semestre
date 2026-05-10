@@ -103,3 +103,19 @@ Restaurante remover_fim(Lista *l){
         return r;
 
 }
+
+void printNome(Lista *l){
+	No *atual = l->inicio;
+	for(int i = 0; i < l->tamanho; i++){
+		printf("%s\n",atual->r->nome);
+	}
+}
+
+void print(Lista *l, char * buffer){
+        No *atual = l->inicio;
+        for(int i = 0; i < l->tamanho; i++){
+                formatar_restaurante(atual->r, buffer);
+		printf("%s", buffer);
+        }
+}
+
