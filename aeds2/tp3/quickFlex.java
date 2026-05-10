@@ -35,7 +35,7 @@ class No{
 
 }
 
-public class listaDupla{
+class listaDupla{
 	private int tamanho;
 	private No inicio;
 	private No fim;
@@ -199,4 +199,15 @@ public class listaDupla{
 	}
 }
 
+public class quickFlex{
+	 public void quickSort(listaDupla l){
+	 	if(l->tamanho > 0){
+			quickSort(l, l.getInicio(), l.getFim());
+		}
+	 }
 
+	 public void quickSort(listaDupla l, No esq, No dir){
+			 
+	 }
+
+}
