@@ -1,0 +1,38 @@
+Firewall -> IPS -> Employees (Servidores)
+
+O Firewall é a primeira barreira, faz o bloqueio baseado em listas(wordlists) ou políticas de acesso. Alem disso, faz a gestao e controle de portas
+
+O IPS tem 4 pilares:
+- Prevençao em real time
+- Machine learning para diferenciar trafego entre suspeito e atividades normais
+- Resposta sem intervencao humana
+- proteção contra ameaças desconhecidas
+
+Existem dois vies:
+- Ou barra tudo, e acessa algumas;
+- Ou libera tudo e barra algumas.
+
+Defesa local:
+- Antivirus (Karspesky, BitDefender)
+-
+
+EndPoints:
+Faz a instalaçao de agentes nos pcs, e o gerenciamento ocorre em um nivel acima no nucleo gerencial(master);
+Utilizado em empresas grandes, com grande quantidades de maquinas;
+
+Servidores on premisse: Servidores/gerencia locais.
+
+
+XDR (Extended Detection and Response + SIEM)
+- Anel Interno: Endpoints/Antivirus
+	
+- Anel Intermediario:
+
+- Anel Externo:
+
+Resumo: 
+
+IPS (A Guarda da Rede)
+Antiirus (A limpeza interna) : local
+EDR (vigilancia ativa) : endPoints
+XDR (O centro de comando) : correlaciona tudo e cooderna a aprtir de uma visao paranamica geral
