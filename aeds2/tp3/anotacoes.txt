@@ -1,0 +1,11 @@
+quicksort:
+	define um pivo = esq+dir/2;
+	apos definir o pivo, percorre o vetor ate os cruzar os indices;
+	procuro com i os maiores que o pivo e com o j os menores
+	realiza a troca
+	chama o recursivamente para a esquerda e direita
+
+Na listaduplamente encadeada, o controle deve ser feito com ponteiros auxiliares.
+Nao precisa trocar os nos de lugar, apenas o restaurante de cada No.
+
+	

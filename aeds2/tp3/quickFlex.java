@@ -202,12 +202,43 @@ class listaDupla{
 public class quickFlex{
 	 public void quickSort(listaDupla l){
 	 	if(l->tamanho > 0){
-			quickSort(l, l.getInicio(), l.getFim());
+			quickSort(l.getInicio(), l.getFim());
 		}
 	 }
+	
+	 public void quickSort(No esq, No dir){
+		No i = esq;
+		No j = dir;
+		No pivo = dir;
 
-	 public void quickSort(listaDupla l, No esq, No dir){
-			 
+		while(i != j && i.getLeft() != j){
+			while(i.getRestaurante().getAvaliacao() < pivo.getRestaurante().getAvaliacao || j.getRestaurante().getAvaliacao() == pivo.getRestaurante().getAvaliacao() && j.getRestaurante().compareTo(pivo.getRestaurante().getNome()) < 0) {
+				i = i.getRight(); //para quando i for maior que o pivo	
+			}
+
+			while(i.getRestaurante().getAvaliacao() > pivo.getRestaurante().getAvaliacao || j.getRestaurante().getAvaliacao() == pivo.getRestaurante().getAvaliacao() && j.getRestaurante().compareTo(pivo.getRestaurante().getNome()) > 0){
+				j = j.getLeft(); //para qunado j for menor que o pivo
+			}
+			
+			if(i != j && i.getLeft() != j){
+				Restaurante tmp = i.getRestaurant();
+
+				i.setRestaurante(j.getRestaurante());
+				j.setRestaurante(tmp);
+
+				i = i.getRight();
+				j = j.getLeft();
+			}	
+
+		}
+
+		if(esq != j){
+			quickSort(esq, j);
+		}
+
+		if(i != dir){
+			quickSort(i, dir);
+		}
 	 }
 
 }
