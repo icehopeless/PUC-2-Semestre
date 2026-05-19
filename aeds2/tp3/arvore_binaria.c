@@ -86,6 +86,12 @@ char * str_copy(char * str, char * str2){
 	return str;
 }
 
+char * limpar_quebra_linha(char * s){
+    s = remove_char(s, '\n');
+    s = remove_char(s, '\r');
+    return s;
+}
+
 typedef struct Hora{
 	int hora;
 	int minuto;
@@ -268,248 +274,130 @@ Colecao_Restaurantes * ler_csv(){
 	return colecao;
 }
 
-//LISTA///////////////////////
-
 typedef struct No{
-	Restaurante *r;
-	struct No *prox;
-}No;
+    struct No* esq;
+    struct No* dir;
+    Restaurante *r;
+} No;
 
-typedef struct Lista{
-	No *inicio;
-	int tamanho;
-}Lista;
+typedef struct arvoreBinaria{
+    No* raiz;
+} arvoreBinaria;
 
-void inserir_inicio(Lista *l, Restaurante *r){
-
-    No *novo = (No *) malloc(sizeof(No));
-
+No* novoNo(Restaurante *r){
+    No* novo = (No*) malloc(sizeof(No));
     novo->r = r;
-
-    novo->prox = l->inicio->prox;
-    l->inicio->prox = novo;
-
-    l->tamanho++;
+    novo->esq = NULL;
+    novo->dir = NULL;
+    return novo;
 }
 
-
-void inserir(Lista *l, Restaurante *r, int pos){
-    if(pos < 0 || pos > l->tamanho){
-        return;
+No* addRec(No* no, Restaurante *r){
+    if(no == NULL){
+        return novoNo(r);
     }
 
-    No *atual = l->inicio;
-
-    for(int i = 0; i < pos; i++){
-        atual = atual->prox;
+    if(strcmp(r->nome, no->r->nome) == 0){
+        return no; 
     }
 
-    No *novo = (No *) malloc(sizeof(No));
-
-    novo->r = r;
-
-    novo->prox = atual->prox;
-    atual->prox = novo;
-
-    l->tamanho++;
+    if(strcmp(r->nome, no->r->nome) < 0){
+        no->esq = addRec(no->esq, r);
+    }else{
+        no->dir = addRec(no->dir, r);
+    }
+    return no;
 }
 
-void inserir_fim(Lista *l, Restaurante *r){
+void add(arvoreBinaria* arvore, Restaurante *r){
+    arvore->raiz = addRec(arvore->raiz, r);
+}
 
-    No *atual = l->inicio;
-
-    while(atual->prox != NULL){
-        atual = atual->prox;
+int pesquisarRec(char nome[], No* no){
+    if(no == NULL){
+        return 0;
     }
 
-    No *novo = (No *) malloc(sizeof(No));
-
-    novo->r = r;
-    novo->prox = NULL;
-
-    atual->prox = novo;
-
-    l->tamanho++;
-}
-
-Restaurante remover_inicio(Lista *l){
-	if(l->inicio->prox == NULL){
-    	exit(1);
-	}
-
-    No *aux = l->inicio->prox;
-
-    Restaurante r = *(aux->r);
-
-    l->inicio->prox = aux->prox;
-
-    free(aux);
-    l->tamanho--;
-
-    return r;
-}
-
-Restaurante remover(Lista *l, int pos){
-	if(pos < 0 || pos >= l->tamanho){
-    	exit(1);
-	}
-	
-    No *atual = l->inicio;
-
-    for(int i = 0; i < pos; i++){
-        atual = atual->prox;
+    if(strcmp(nome, no->r->nome) == 0){
+        return 1;
     }
 
-    No *aux = atual->prox;
-
-    Restaurante r = *(aux->r);
-
-    atual->prox = aux->prox;
-
-    free(aux);
-    l->tamanho--;
-
-    return r;
-}
-
-Restaurante remover_fim(Lista *l){
-    if(l->inicio->prox == NULL){
-    	exit(1);
-	}
-
-	No *atual = l->inicio;
-
-    while(atual->prox->prox != NULL){
-        atual = atual->prox;
-    }
-
-    No *aux = atual->prox;
-
-    Restaurante r = *(aux->r);
-
-    atual->prox = NULL;
-
-    free(aux);
-    l->tamanho--;
-
-    return r;
-}
-
-void printNome(Lista *l){
-    No *atual = l->inicio->prox;
-
-    while(atual != NULL){
-        printf("%s\n", atual->r->nome);
-        atual = atual->prox;
+    if(strcmp(nome, no->r->nome) < 0){
+        printf("esq ");
+        return pesquisarRec(nome, no->esq);
+    }else{
+        printf("dir ");
+        return pesquisarRec(nome, no->dir);
     }
 }
 
-void print(Lista *l, char * buffer){
-    No *atual = l->inicio->prox;
+int pesquisar(arvoreBinaria* arvore, char nome[]){
+    printf("raiz ");
+    return pesquisarRec(nome, arvore->raiz);
+}
 
-    while(atual != NULL){
-        formatar_restaurante(atual->r, buffer);
+void caminhar_em_ordem_rec(No* no, char *buffer) {
+    if (no != NULL) {
+        caminhar_em_ordem_rec(no->esq, buffer);
+        formatar_restaurante(no->r, buffer);
         printf("%s", buffer);
-        atual = atual->prox;
+        caminhar_em_ordem_rec(no->dir, buffer);
     }
+}
+
+void caminhar_em_ordem(arvoreBinaria* arvore, char *buffer) {
+    caminhar_em_ordem_rec(arvore->raiz, buffer);
 }
 
 int buscar_restaurante(Colecao_Restaurantes *c, int id){
-
     for(int i = 0; i < c->tamanho; i++){
-
         if(c->restaurantes[i]->id == id){
             return i;
         }
     }
-
     return -1;
 }
+
 
 
 int main(){
     Colecao_Restaurantes *colecao = ler_csv();
 
-    Lista lista;
-    lista.inicio = (No *) malloc(sizeof(No));
-    lista.inicio->prox = NULL;
-    lista.tamanho = 0;
+    arvoreBinaria arvore;
+    arvore.raiz = NULL;
 
+    char entrada[256];
 
-    while(1){
-        int id;
-        if (scanf("%d", &id) != 1) break;
-
-        if(id == -1){
+    
+    while(fgets(entrada, sizeof(entrada), stdin) != NULL){
+        limpar_quebra_linha(entrada);
+        if(strcmp(entrada, "-1") == 0) {
             break;
         }
 
+        int id = atoi(entrada);
         int pos = buscar_restaurante(colecao, id);
         if(pos != -1){
-            inserir_fim(&lista, colecao->restaurantes[pos]);
+            add(&arvore, colecao->restaurantes[pos]);
+        }
+    }
+    while(fgets(entrada, sizeof(entrada), stdin) != NULL){
+        limpar_quebra_linha(entrada);
+        if(strcmp(entrada, "FIM") == 0) {
+            break;
+        }
+
+        int encontrado = pesquisar(&arvore, entrada);
+        if(encontrado) {
+            printf("SIM\n");
+        } else {
+            printf("NAO\n");
         }
     }
 
  
-    int n;
-    if (scanf("%d", &n) == 1) {
-
-        for(int i = 0; i < n; i++){
-            char comando[5];
-            scanf("%s", comando);
-
-       
-            if(strcmp(comando, "II") == 0){
-                int id;
-                scanf("%d", &id);
-                int pos = buscar_restaurante(colecao, id);
-                if(pos != -1){
-                    inserir_inicio(&lista, colecao->restaurantes[pos]);
-                }
-            }
-         
-            else if(strcmp(comando, "IF") == 0){
-                int id;
-                scanf("%d", &id);
-                int pos = buscar_restaurante(colecao, id);
-                if(pos != -1){
-                    inserir_fim(&lista, colecao->restaurantes[pos]);
-                }
-            }
-        
-            else if(strcmp(comando, "I*") == 0){
-                int posLista;
-                int id;
-                scanf("%d %d", &posLista, &id);
-                int pos = buscar_restaurante(colecao, id);
-                if(pos != -1){
-                    inserir(&lista, colecao->restaurantes[pos], posLista);
-                }
-            }
-      
-            else if(strcmp(comando, "RI") == 0){
-                Restaurante r = remover_inicio(&lista);
-                printf("(R)%s\n", r.nome);
-            }
-       
-            else if(strcmp(comando, "RF") == 0){
-                Restaurante r = remover_fim(&lista);
-                printf("(R)%s\n", r.nome);
-            }
-   
-            else if(strcmp(comando, "R*") == 0){
-                int posLista;
-                scanf("%d", &posLista);
-                Restaurante r = remover(&lista, posLista);
-                printf("(R)%s\n", r.nome);
-            }
-        }
-    }
-
- 
-    char buffer[2000];
-    print(&lista, buffer);
+    char buffer[1500];
+    caminhar_em_ordem(&arvore, buffer);
 
     return 0;
 }
-

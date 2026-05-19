@@ -8,4 +8,10 @@ quicksort:
 Na listaduplamente encadeada, o controle deve ser feito com ponteiros auxiliares.
 Nao precisa trocar os nos de lugar, apenas o restaurante de cada No.
 
+
+
+matrizFlexivel:
+	para multiplicacao de matrizes, precisamos multiplicar cada linha da primeira por todas as coluna da segunda
 	
+o primeiro for vai percorrer as linhas da matriz 1
+o segundo for vai percorrer as colunas da matriz 2

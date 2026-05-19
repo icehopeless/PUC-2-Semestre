@@ -21,22 +21,18 @@ class stringUtils{
 		return slices;
 	}
 */
+    protected static boolean equalsS(String a, String b){
 
-protected static boolean equalsS(String a, String b){
-
-    if(a.length() != b.length()){
-        return false;
-    }
+    if(a == null || b == null) return false;
+    if(a.length() != b.length()) return false;
 
     for(int i = 0; i < a.length(); i++){
         if(a.charAt(i) != b.charAt(i)){
             return false;
         }
     }
-
     return true;
 }
-
 	protected static String[] splitS(String s, char regex) {
 	    
 	    int parts = 1;
@@ -271,7 +267,7 @@ class Restaurante extends stringUtils{
 		return this.capacidade;
 	}
 
-	public Double getAvaliacao(){
+	public Double getAvalicao(){
 		return this.avaliacao;
 	}
 
@@ -434,307 +430,144 @@ class ColecaoRestaurantes extends stringUtils{
 }
 
 
-//LISTA DUPLA/////////////////////////////
-class No{
-    private No right;
-    private No left;
+class No {
+    No esq;
+    No dir;
     private Restaurante r;
 
-    public No(){
-        right = null;
-        left = null;
-        r = null;
+    public No() {
+        this.esq = null;
+        this.dir = null;
     }
 
-    public No(Restaurante r){
+    public No(Restaurante r) {
         this.r = r;
-        this.right = null;
-        this.left = null;
+        this.esq = null;
+        this.dir = null;
     }
 
-    public No getRight(){
-        return this.right;
-    }
-
-    public void setRight(No no){
-        this.right = no;
-    }
-
-    public No getLeft(){
-        return this.left;
-    }
-
-    public void setLeft(No no){
-        this.left = no;
-    }
-
-    public Restaurante getRestaurante(){
-        return this.r;
-    }
-
-    public void setRestaurante(Restaurante r){
-        this.r = r;
-    }
+    public Restaurante getRestaurante() { return this.r; }
+    public void setRestaurante(Restaurante r) { this.r = r; }
 }
 
-public class listaDupla{
+public class arvoreBinaria {
+    No raiz;
 
-    private int tamanho;
-    private No inicio;
-    private No fim;
-
-    public listaDupla(){
-        this.inicio = new No();
-        this.fim = new No();
-
-        this.inicio.setRight(fim);
-        this.fim.setLeft(inicio);
-
-        this.tamanho = 0;
+    public arvoreBinaria() {
+        this.raiz = null;
     }
 
-    public int getTamanho(){
-        return this.tamanho;
+    public void add(Restaurante r) {
+        this.raiz = add(this.raiz, r);
     }
 
-    public void inserir(Restaurante r, int pos){
-
-        if(pos < 0 || pos > this.tamanho){
-            return;
+    private No add(No no, Restaurante r) {
+        if (no == null) {
+            return new No(r);
         }
 
-        No atual = this.inicio;
-
-        for(int i = 0; i < pos; i++){
-            atual = atual.getRight();
+       
+        if (r.getNome().compareTo(no.getRestaurante().getNome()) == 0) {
+            return no;
         }
 
-        No novo = new No(r);
-
-        No aux = atual.getRight();
-
-        novo.setLeft(atual);
-        novo.setRight(aux);
-
-        atual.setRight(novo);
-        aux.setLeft(novo);
-
-        this.tamanho++;
-    }
-
-    public void inserirInicio(Restaurante r){
-
-        No novo = new No(r);
-
-        No aux = this.inicio.getRight();
-
-        novo.setLeft(this.inicio);
-        novo.setRight(aux);
-
-        this.inicio.setRight(novo);
-        aux.setLeft(novo);
-
-        this.tamanho++;
-    }
-
-    public void inserirFim(Restaurante r){
-
-        No novo = new No(r);
-
-        No aux = this.fim.getLeft();
-
-        novo.setRight(this.fim);
-        novo.setLeft(aux);
-
-        aux.setRight(novo);
-        this.fim.setLeft(novo);
-
-        this.tamanho++;
-    }
-
-    public Restaurante remover(int pos){
-
-        if(pos < 0 || pos >= this.tamanho){
-            return null;
+        if (r.getNome().compareTo(no.getRestaurante().getNome()) < 0) {
+            no.esq = add(no.esq, r);
+        } else {
+            no.dir = add(no.dir, r);
         }
 
-        No atual;
+        return no;
+    }
 
-        if(pos < this.tamanho / 2){
+    public void pesquisar(String nome) {
+     
+        System.out.print("raiz ");
+        boolean encontrado = pesquisar(nome, this.raiz);
+        if (encontrado) {
+            System.out.println("SIM");
+        } else {
+            System.out.println("NAO");
+        }
+    }
 
-            atual = this.inicio.getRight();
+    private boolean pesquisar(String nome, No no) {
+        if (no == null) {
+            return false;
+        }
 
-            for(int i = 0; i < pos; i++){
-                atual = atual.getRight();
+        if (nome.compareTo(no.getRestaurante().getNome()) == 0) {
+            return true;
+        }
+
+        if (nome.compareTo(no.getRestaurante().getNome()) < 0) {
+            System.out.print("esq ");
+            return pesquisar(nome, no.esq);
+        } else {
+            System.out.print("dir ");
+            return pesquisar(nome, no.dir);
+        }
+    }
+
+   
+    public void caminharEmOrdem() {
+        caminharEmOrdem(this.raiz);
+    }
+
+    private void caminharEmOrdem(No no) {
+        if (no != null) {
+            caminharEmOrdem(no.esq);
+            System.out.println(no.getRestaurante().formatar());
+            caminharEmOrdem(no.dir);
+        }
+    }
+
+ 
+ public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        ColecaoRestaurantes colecao = ColecaoRestaurantes.readCsv();
+        arvoreBinaria arvore = new arvoreBinaria();
+
+        while (sc.hasNextLine()) {
+            String linha = sc.nextLine().trim();
+            if (linha.length() == 0) continue;
+
+            if (stringUtils.equalsS(linha, "-1")) {
+                break;
             }
 
-        }else{
+            int id = Integer.parseInt(linha);
 
-            atual = this.fim.getLeft();
-
-            for(int i = this.tamanho - 1; i > pos; i--){
-                atual = atual.getLeft();
+            Restaurante encontrado = null;
+            for (Restaurante r : colecao.getRestaurantes()) {
+                if (r != null && r.getId() == id) {
+                    encontrado = r;
+                    break;
+                }
             }
-        }
 
-        Restaurante r = atual.getRestaurante();
-
-        No esq = atual.getLeft();
-        No dir = atual.getRight();
-
-        esq.setRight(dir);
-        dir.setLeft(esq);
-
-        this.tamanho--;
-
-        return r;
-    }
-
-    public Restaurante removerInicio(){
-
-        if(this.inicio.getRight() == this.fim){
-            return null;
-        }
-
-        No removido = this.inicio.getRight();
-
-        Restaurante r = removido.getRestaurante();
-
-        No aux = removido.getRight();
-
-        this.inicio.setRight(aux);
-        aux.setLeft(this.inicio);
-
-        this.tamanho--;
-
-        return r;
-    }
-
-    public Restaurante removerFim(){
-
-        if(this.inicio.getRight() == this.fim){
-            return null;
-        }
-
-        No removido = this.fim.getLeft();
-
-        Restaurante r = removido.getRestaurante();
-
-        No aux = removido.getLeft();
-
-        this.fim.setLeft(aux);
-        aux.setRight(this.fim);
-
-        this.tamanho--;
-
-        return r;
-    }
-
-    public void print(){
-
-        for(No i = this.inicio.getRight(); i != this.fim; i = i.getRight()){
-            System.out.println(i.getRestaurante().formatar());
-        }
-    }
-
-    public static int buscarRestaurante(ColecaoRestaurantes c, int id){
-
-        Restaurante[] rs = c.getRestaurantes();
-
-        for(int i = 0; i < c.getTamanho(); i++){
-
-            if(rs[i].getId() == id){
-                return i;
+            if (encontrado != null) {
+                arvore.add(encontrado);
             }
         }
 
-        return -1;
-    }
+        while (sc.hasNextLine()) {
+            String nomePesquisa = sc.nextLine().trim();
+            if (nomePesquisa.length() == 0) continue;
 
-public static void main(String[] args){
-
-    Scanner sc = new Scanner(System.in);
-
-    ColecaoRestaurantes colecao = ColecaoRestaurantes.readCsv();
-    listaDupla lista = new listaDupla();
-
-    while(true){
-
-        int id = Integer.parseInt(sc.nextLine());
-
-        if(id == -1){
-            break;
-        }
-
-        int pos = buscarRestaurante(colecao, id);
-
-        if(pos != -1){
-            lista.inserirFim(colecao.getRestaurantes()[pos]);
-        }
-    }
-
-    while(sc.hasNextLine()){
-
-        String linha = sc.nextLine();
-
-        if(linha.length() == 0) continue;
-
-        String[] partes = stringUtils.splitS(linha, ' ');
-
-        if(stringUtils.equalsS(partes[0], "II")){
-
-            int id = Integer.parseInt(partes[1]);
-            int pos = buscarRestaurante(colecao, id);
-
-            if(pos != -1){
-                lista.inserirInicio(colecao.getRestaurantes()[pos]);
+            if (stringUtils.equalsS(nomePesquisa, "FIM")) {
+                break;
             }
+
+            arvore.pesquisar(nomePesquisa);
         }
 
-        else if(stringUtils.equalsS(partes[0], "IF")){
+    
+        arvore.caminharEmOrdem();
 
-            int id = Integer.parseInt(partes[1]);
-            int pos = buscarRestaurante(colecao, id);
+      
 
-            if(pos != -1){
-                lista.inserirFim(colecao.getRestaurantes()[pos]);
-            }
-        }
-
-        else if(stringUtils.equalsS(partes[0], "I*")){
-
-            int posLista = Integer.parseInt(partes[1]);
-            int id = Integer.parseInt(partes[2]);
-
-            int pos = buscarRestaurante(colecao, id);
-
-            if(pos != -1){
-                lista.inserir(colecao.getRestaurantes()[pos], posLista);
-            }
-        }
-
-        else if(stringUtils.equalsS(partes[0], "RI")){
-
-            Restaurante r = lista.removerInicio();
-            System.out.println("(R)" + r.getNome());
-        }
-
-        else if(stringUtils.equalsS(partes[0], "RF")){
-
-            Restaurante r = lista.removerFim();
-            System.out.println("(R)" + r.getNome());
-        }
-
-        else if(stringUtils.equalsS(partes[0], "R*")){
-
-            int posLista = Integer.parseInt(partes[1]);
-
-            Restaurante r = lista.remover(posLista);
-            System.out.println("(R)" + r.getNome());
-        }
+        sc.close();
     }
-
-    lista.print();
-    sc.close();
-}
 }
