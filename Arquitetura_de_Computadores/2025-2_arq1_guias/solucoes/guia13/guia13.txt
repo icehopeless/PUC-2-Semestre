@@ -1,0 +1,81 @@
+Gabriel Agostinho da Silva
+903104
+
+
+Tabela verdade do Flip Flop JK
+
+J   K   Q   Q'
+-----------------
+0   0   Q   Q' -> Hold
+0   1   0   1 ->  Reset
+1   0   1   0 ->  Set
+1   1   Q'  Q ->  Toggle
+
+
+
+tabela de estados
+
+ #  a  b  c  a  b 
+------------------------- 
+ 0 | 0  0  0  0  0 
+ 1 | 0  0  1  1  1 
+ 2 | 0  1  0  0  1 
+ 3 | 0  1  1  0  0 
+ 4 | 1  0  0  1  0 
+ 5 | 1  0  1  0  1 
+ 6 | 1  1  0  1  1 
+ 7 | 1  1  1  1  0 
+
+
+Sops
+
+s1 =  (1,4,6,7)
+
+S1​(a,b,c) = a'b'c+ab'c'+abc'+abc
+
+s2 = (1,2,5,6)
+
+S2​ = a'b'c+a'bc'+ab'c+abc'
+
+
+os bitsde comprimentos nos contadores que dizer diretamente a capacidade de armazenar numeros
+ou seja, quantidade de flip flops.
+
+xxxxxx(2) 
+
+Os circuitos devem estar em modo toggle, com j e k = 1...
+O primeiro ff recebe o clock principal, e passa em cascata para os outros pelo Q ou Q', depende 
+se for crescente ou decrescente
+
+Para os decadicos, a conta ocorre de 0 ate 9, quando encontrar 9 (01001(2)) deve dar Reset
+O reset sera uma and entre q3 e q1... pois 01001. Entao deve mostrar o 9, e resetar quando tentar virar 10.
+
+
+No caso do contador decrescente, precisamos do preset... Pois, quando o contador chegar no 0000, deve voltar para
+01001.
+
+Entao, o modulo ou circuito deve verificar quando houver 11111.
+
+
+Flip Flop T
+T	Q	Q'
+-----------
+0	Q	Q
+1	Q	Q'
+
+Flip Flop T - Tabela de Estados
+ # | a  b  c  a  b 
+--------------------
+ 0 | 0  0  0  0  0 
+ 1 | 0  0  1  1  1 
+ 2 | 0  1  0  0  1 
+ 3 | 0  1  1  0  0 
+ 4 | 1  0  0  1  0 
+ 5 | 1  0  1  0  1 
+ 6 | 1  1  0  1  1 
+ 7 | 1  1  1  1  0 
+
+
+Sera sincrono, ou seja, o clock inicial vale para todos, nao depende do ff anterior.
+
+
