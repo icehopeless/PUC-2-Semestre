@@ -1,0 +1,45 @@
+903104
+Gabriel Agostinho da Silva
+
+
+Shift Register
+
+(para a direita)
+- Para a montagem dos SR(Shitf Register), usaremos flipflops do tipo jk ou D
+- Sera utilizado o clock sincrono (para todos os ff)
+- A saida Q dos ffs serao ligadas na entrada D do proximo a direita, e nesse mesmo fio 
+sera ligado a saida.
+
+Para a esquerda sera aplicado da mesma forma, com a diferença entre a ligacao dos fios 
+Q... A saida Q sera ligada na entrada D do FF a esquerda do atual.
+
+
+- No caso de preset em todos os estados, usar a entrada 1 dos FFs D. Para que seja setado o valor 1 em todos eles
+- Para os circulares, ligar o ultimo no primeiro, ou vise e versa, dependendo da direcao do registrador.
+
+
+Rings
+- Para a Esquerda... Liga a saida Q do primeiro a esquerda na entrada D do ultimo a direita.
+- Para a Direita... Liga o Q do ultimo a direita no D do primeiro a esquerda
+
+Q do anterior -> D do proximo: Direita
+Q do atual -> D do anterior: esquerda
+
+
+Para o anel torcido, invertemos o Q... isso é, pegamos a saida negada para realimentar o ultimo ou primeiro
+depende da direcao.
+
+O anel torcido é muito interessante, pois quando chega no primeiro ff (no caso do shift para esquerda),
+no proximo pulso do clock, a saida Q sera 0. Pegando a invertida e realimentado o ultimo (direita), ele pega o sinal invertido
+e repassa para frente.
+
+O conversor paralelo-serie se tem semelhanca com o shift register para a direita... Porem, os bits vao saindo um por um.~
+O bit so sobe para os FFs se o load estivedr ligado junto com a entrada respectiva(AND).
+A porta OR serve para passar o sinal Q do ff anterior para frente, independente se tem entrada ou nao.
+
+
+
+Video utilizado:
+https://www.youtube.com/watch?v=xbvmKTNIGT0
+
+
