@@ -1,25 +1,25 @@
-public class No<T>{
-	No<T> esq;
-       	No<T> dir;
-	private T valor;
+public class No{
+	No esq;
+	No dir;
+	private int valor;
 	private boolean cor;
 
 
 	public No(){
-		this.valor = null;
+		this.valor = 0;
 		this.esq = null;
 		this.dir = null;
 		this.cor = false;
 	}
 
-	public No(T valor){
+	public No(int valor){
 		this.valor = valor;
 		this.esq = null;
 		this.dir = null;
 		this.cor = false;
 	}
 
-	public T getValor(){
+	public int getValor(){
 		return this.valor;
 	}
 
@@ -34,7 +34,8 @@ public class No<T>{
 	public boolean isTipo4(){
 		if(this.esq != null && this.dir != null){
 			return (this.esq.cor == true && this.dir.cor) == true ? true : false;
-		}		
+		}
+		return false;
 	}
 
 	
