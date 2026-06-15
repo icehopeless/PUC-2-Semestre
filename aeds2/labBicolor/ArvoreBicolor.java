@@ -109,40 +109,33 @@ public class ArvoreBicolor {
 		return rotacionarDir(no);
 	}
 
-	private No balancear(No bisavo, No avo, No pai, No atual) {
+	private void balancear(No bisavo, No avo, No pai, No atual) {
 		No novaRaiz = new No();
 
 		if (avo.getValor() > pai.getValor() && pai.getValor() > atual.getValor()) {
 			novaRaiz = rotacionarDir(avo);
-		}
 
-		else if (avo.getValor() > pai.getValor() && pai.getValor() < atual.getValor()) {
-			avo.esq = rotacionarEsq(pai);
-			novaRaiz = rotacionarDir(avo);
-		}
+		} else if (avo.getValor() > pai.getValor() && pai.getValor() < atual.getValor()) {
+			novaRaiz = rotacionarEsqDir(avo);  
 
-		else if (avo.getValor() < pai.getValor() && pai.getValor() < atual.getValor()) {
+		} else if (avo.getValor() < pai.getValor() && pai.getValor() < atual.getValor()) {
 			novaRaiz = rotacionarEsq(avo);
-		}
-
-		else if (avo.getValor() < pai.getValor() && pai.getValor() > atual.getValor()) {
-			avo.dir = rotacionarDir(pai);
-			novaRaiz = rotacionarEsq(avo);
+			
+		} else if (avo.getValor() < pai.getValor() && pai.getValor() > atual.getValor()) {
+			novaRaiz = rotacionarDirEsq(avo);  
 		}
 
 		novaRaiz.dir.setCor(true);
 		novaRaiz.esq.setCor(true);
-		if (bisavo == null) {
-			return novaRaiz;
-		}
 
-		if (bisavo.esq == avo) {
+		if (bisavo == null) {
+			raiz = novaRaiz;
+		}
+		else if (bisavo.esq == avo) {
 			bisavo.esq = novaRaiz;
 		} else {
 			bisavo.dir = novaRaiz;
 		}
-
-		return novaRaiz;
 	}
 
 	public void add(int x){
@@ -153,7 +146,7 @@ public class ArvoreBicolor {
 		}
 	}
 
-	private No add(No bisavo, No avo, No pai, No no, int valor){
+	private void add(No bisavo, No avo, No pai, No no, int valor){
         if (no == null) {
             No novo = new No(valor);
             novo.setCor(true);
@@ -173,7 +166,8 @@ public class ArvoreBicolor {
 			fragmentar(no);
 
 			if(no == raiz) no.setCor(false);
-			else if(pai != null && pai.getCor()){
+
+			else if(pai != null && pai.getCor() == true){
 				balancear(bisavo, avo, pai, no);
 			}
 		}
@@ -185,10 +179,8 @@ public class ArvoreBicolor {
 		}
 
 	}
-}
 
-class Main {
-    public static void main(String[] args) {
+	public static void main(String[] args) {
         ArvoreBicolor arvore = new ArvoreBicolor();
  
         int[] valores = {4, 35, 10, 13, 3, 30, 15, 12, 7, 40, 20};
@@ -200,4 +192,6 @@ class Main {
         arvore.printEmOrdem(arvore.getRaiz());
         System.out.println();
     }
+
 }
+
