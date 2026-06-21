@@ -430,112 +430,134 @@ class ColecaoRestaurantes extends stringUtils{
 }
 
 
-class No {
-    No esq;
-    No dir;
-    private Restaurante r;
-    private int nivel;
+public class No{
+	No esq;
+	No dir;
+	private int valor;
+	private boolean cor;
 
-    public No() {
-        this.esq = null;
-        this.dir = null;
-	this.nivel = 1;
-    }
 
-    public No(Restaurante r) {
-        this.r = r;
-        this.esq = null;
-        this.dir = null;
-	this.nivel = 1;
-    }
-
-    public Restaurante getRestaurante() { return this.r; }
-    public void setRestaurante(Restaurante r) { this.r = r; }
-   
-    //pega a altura mais longa e soma +1
-    public void setNivel(){
-    	this.nivel = 1 + Math.max(getNivel(esq), getNivel(dir));
-    }
-
-    public static int getNivel(No no){
-    	if(no == null){
-		return 0;
-	}else{
-		return no.nivel;
+	public No(){
+		this.valor = 0;
+		this.esq = null;
+		this.dir = null;
+		this.cor = false;
 	}
-    }
+
+	public No(int valor){
+		this.valor = valor;
+		this.esq = null;
+		this.dir = null;
+		this.cor = false;
+	}
+
+	public int getValor(){
+		return this.valor;
+	}
+
+	public boolean getCor(){
+		return this.cor;
+	}
+
+	public void setCor(boolean cor){
+		this.cor = cor;
+	}
+	
+	public boolean isTipo4(){
+		if(this.esq != null && this.dir != null){
+			return (this.esq.cor == true && this.dir.cor) == true ? true : false;
+		}
+		return false;
+	}
+
+	
 }
 
-public class arvoreAVL {
+public class arvoreBicolor {
     No raiz;
 
-    public arvoreAVL() {
+    public arvoreBicolor() {
         this.raiz = null;
     }
+    
+    // inversao de cor
+	private void fragmentar(No no) {
+		no.setCor(!no.getCor());
+		no.esq.setCor(!no.esq.getCor());
+		no.dir.setCor(!no.dir.getCor());
+	}
+	
+	private void balancear(No bisavo, No avo, No pai, No atual) {
+		No novaRaiz = new No();
 
-    //para saber se precisamos balancer, usamos o fator balanceamento. -1 <= fb <= 1
-    //se for menor que -1, desbalanceado para a esquerda
-    //se for maior que 1, desbalanceado para a direita
-    //isso se aplica para fator = altura dir - altura esq
+		if (avo.getValor() > pai.getValor() && pai.getValor() > atual.getValor()) {
+			novaRaiz = rotacionarDir(avo);
 
-    private No balancear(No no){
-	    if(no == null){
-	    	return null;
-	    }
+		} else if (avo.getValor() > pai.getValor() && pai.getValor() < atual.getValor()) {
+			novaRaiz = rotacionarEsqDir(avo);  
 
-	    int fator = No.getNivel(no.dir) - No.getNivel(no.esq);
-	    if(fator >= -1 && fator <= 1){
-	    	no.setNivel();
-	    }
-
-	    else if(fator < -1){
-		int fFilho = No.getNivel(no.esq.dir) - No.getNivel(no.esq.esq);
-		if(fFilho <= 0){
-			no = rotacionarDir(no);
+		} else if (avo.getValor() < pai.getValor() && pai.getValor() < atual.getValor()) {
+			novaRaiz = rotacionarEsq(avo);
+			
+		} else if (avo.getValor() < pai.getValor() && pai.getValor() > atual.getValor()) {
+			novaRaiz = rotacionarDirEsq(avo);  
 		}
-		else if(fFilho > 0){
-			no.esq = rotacionarEsq(no.esq);
-			no = rotacionarDir(no);
+
+		novaRaiz.dir.setCor(true);
+		novaRaiz.esq.setCor(true);
+
+		if (bisavo == null) {
+			raiz = novaRaiz;
 		}
-	    }
-
-	    else if(fator > 1){
-		int fFilho = No.getNivel(no.dir.dir) - No.getNivel(no.dir.esq);
-		if(fFilho >= 0){
-			no = rotacionarEsq(no);
+		else if (bisavo.esq == avo) {
+			bisavo.esq = novaRaiz;
+		} else {
+			bisavo.dir = novaRaiz;
 		}
-		else if(fFilho < 0){
-			no.dir = rotacionarDir(no.dir);
-			no = rotacionarEsq(no);
+	}
+
+
+	public void add(int x){
+		if(raiz == null){
+			raiz = new No(x);
+		}else{
+			add(null, null, null, raiz, x);
 		}
-	    	
-	    }
+	}
 
-	    return no;
-    }
-
-    public void add(Restaurante r) {
-        this.raiz = add(this.raiz, r);
-    }
-
-    private No add(No no, Restaurante r) {
+	private void add(No bisavo, No avo, No pai, No no, int valor){
         if (no == null) {
-            return new No(r);
+            No novo = new No(valor);
+            novo.setCor(true);
+
+            if (pai.getValor() > valor) {
+                pai.esq = novo;
+            } else {
+                pai.dir = novo;
+            }
+            if (pai.getCor()) {
+                balancear(bisavo, avo, pai, novo);
+            }
+            return;
         }
 
-        if (r.getNome().compareTo(no.getRestaurante().getNome()) == 0) {
-            return balancear(no);
-        }
+		if(no.isTipo4()){
+			fragmentar(no);
 
-        if (r.getNome().compareTo(no.getRestaurante().getNome()) < 0) {
-            no.esq = add(no.esq, r);
-        } else {
-            no.dir = add(no.dir, r);
-        }
+			if(no == raiz) no.setCor(false);
 
-        return balancear(no);
-    }
+			else if(pai != null && pai.getCor() == true){
+				balancear(bisavo, avo, pai, no);
+			}
+		}
 
+		if(valor < no.getValor()){
+			add(avo, pai, no, no.esq, valor);
+		}else{
+			add(avo, pai, no, no.dir, valor);
+		}
+
+	}
 
     private No rotacionarEsq(No no){
     	No noDir = no.dir;
@@ -563,6 +585,7 @@ public class arvoreAVL {
 	
 	return noEsq;	
     }
+    
     //o no.dir = pai... pois o atual = avo.
     private No rotacionarDirEsq(No no){
     	no.dir = rotacionarDir(no.dir);

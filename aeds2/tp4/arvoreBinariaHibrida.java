@@ -433,85 +433,46 @@ class ColecaoRestaurantes extends stringUtils{
 class No {
     No esq;
     No dir;
-    private Restaurante r;
-    private int nivel;
+    int key;
 
     public No() {
         this.esq = null;
         this.dir = null;
-	this.nivel = 1;
     }
 
     public No(Restaurante r) {
         this.r = r;
         this.esq = null;
         this.dir = null;
-	this.nivel = 1;
     }
 
     public Restaurante getRestaurante() { return this.r; }
     public void setRestaurante(Restaurante r) { this.r = r; }
-   
-    //pega a altura mais longa e soma +1
-    public void setNivel(){
-    	this.nivel = 1 + Math.max(getNivel(esq), getNivel(dir));
-    }
-
-    public static int getNivel(No no){
-    	if(no == null){
-		return 0;
-	}else{
-		return no.nivel;
-	}
-    }
 }
 
-public class arvoreAVL {
+class No2{
+	No2 esq;
+	No2 dir;
+	private string nome;
+
+	public No2(){
+		this.esq = null;
+		this.dir = null;
+		this.nome = "";
+	}
+
+	public No2(String nome){
+		this.esq = null;
+		this.dir = null;
+		this.nome = nome;
+	}
+}
+
+public class arvoreBinaria {
     No raiz;
 
-    public arvoreAVL() {
+    public arvoreBinaria() {
         this.raiz = null;
-    }
-
-    //para saber se precisamos balancer, usamos o fator balanceamento. -1 <= fb <= 1
-    //se for menor que -1, desbalanceado para a esquerda
-    //se for maior que 1, desbalanceado para a direita
-    //isso se aplica para fator = altura dir - altura esq
-
-    private No balancear(No no){
-	    if(no == null){
-	    	return null;
-	    }
-
-	    int fator = No.getNivel(no.dir) - No.getNivel(no.esq);
-	    if(fator >= -1 && fator <= 1){
-	    	no.setNivel();
-	    }
-
-	    else if(fator < -1){
-		int fFilho = No.getNivel(no.esq.dir) - No.getNivel(no.esq.esq);
-		if(fFilho <= 0){
-			no = rotacionarDir(no);
-		}
-		else if(fFilho > 0){
-			no.esq = rotacionarEsq(no.esq);
-			no = rotacionarDir(no);
-		}
-	    }
-
-	    else if(fator > 1){
-		int fFilho = No.getNivel(no.dir.dir) - No.getNivel(no.dir.esq);
-		if(fFilho >= 0){
-			no = rotacionarEsq(no);
-		}
-		else if(fFilho < 0){
-			no.dir = rotacionarDir(no.dir);
-			no = rotacionarEsq(no);
-		}
-	    	
-	    }
-
-	    return no;
     }
 
     public void add(Restaurante r) {
@@ -523,8 +484,9 @@ public class arvoreAVL {
             return new No(r);
         }
 
+       
         if (r.getNome().compareTo(no.getRestaurante().getNome()) == 0) {
-            return balancear(no);
+            return no;
         }
 
         if (r.getNome().compareTo(no.getRestaurante().getNome()) < 0) {
@@ -533,45 +495,7 @@ public class arvoreAVL {
             no.dir = add(no.dir, r);
         }
 
-        return balancear(no);
-    }
-
-
-    private No rotacionarEsq(No no){
-    	No noDir = no.dir;
-	No noDirEsq = noDir.esq;
-
-
-	noDir.esq = no;
-	no.dir = noDirEsq;
-
-	no.setNivel();
-	noDir.setNivel();
-
-	return noDir;
-    }
-
-    private No rotacionarDir(No no){
-   	No noEsq = no.esq;
-       	No noEsqDir = noEsq.dir;
-	
-	noEsq.dir = no;
-	no.esq = noEsqDir;
-
-	no.setNivel();
-	noEsq.setNivel();
-	
-	return noEsq;	
-    }
-    //o no.dir = pai... pois o atual = avo.
-    private No rotacionarDirEsq(No no){
-    	no.dir = rotacionarDir(no.dir);
-	return rotacionarEsq(no);
-    }
-
-    private No rotacionarEsqDir(No no){
-    	no.esq = rotacionarEsq(no.esq);
-	return rotacionarDir(no);
+        return no;
     }
 
     public void pesquisar(String nome) {
@@ -621,7 +545,7 @@ public class arvoreAVL {
         Scanner sc = new Scanner(System.in);
         
         ColecaoRestaurantes colecao = ColecaoRestaurantes.readCsv();
-        arvoreAVL arvore = new arvoreAVL();
+        arvoreBinaria arvore = new arvoreBinaria();
 
         while (sc.hasNextLine()) {
             String linha = sc.nextLine().trim();
