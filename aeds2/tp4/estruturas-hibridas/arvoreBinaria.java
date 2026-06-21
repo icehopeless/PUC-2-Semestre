@@ -1,624 +1,367 @@
 import java.io.*;
 import java.util.*;
 
-class stringUtils{
-/*
-	protected static String[] splitS(String s, char regex){
-		String atual = "";
-		int count = 0;
-		String[] slices = new String[s.length()];
-
-		for(int i = 0; i < s.length(); i++){
-			char caracter = s.charAt(i);
-			if(caracter == regex){
-				slices[count] = atual;
-				count++;
-				atual = "";
-			}else{
-				atual += caracter;
-			}
-		}
-		return slices;
-	}
-*/
-    protected static boolean equalsS(String a, String b){
-
-    if(a == null || b == null) return false;
-    if(a.length() != b.length()) return false;
-
-    for(int i = 0; i < a.length(); i++){
-        if(a.charAt(i) != b.charAt(i)){
+class stringUtils {
+    protected static boolean equalsS(String a, String b) {
+        if (a == null || b == null) {
             return false;
         }
+        if (a.length() != b.length()) {
+            return false;
+        }
+        for (int i = 0; i < a.length(); i++) {
+            if (a.charAt(i) != b.charAt(i)) {
+                return false;
+            }
+        }
+        return true;
     }
-    return true;
-}
-	protected static String[] splitS(String s, char regex) {
-	    
-	    int parts = 1;
-	    for (int i = 0; i < s.length(); i++) {
-	        if (s.charAt(i) == regex) parts++;
-	    }
-	
-	    String[] slices = new String[parts];
-	    String atual = "";
-	    int count = 0;
-	    for (int i = 0; i < s.length(); i++) {
-	        char caracter = s.charAt(i);
-	        if (caracter == regex) {
-	            slices[count++] = atual;
-	            atual = "";
-	        } else {
-	            atual += caracter;
-	        }
-	    }
-	    	slices[count] = atual;
-    		return slices;
-	}
 
-	protected static int countChar(String s, char regex){
-		int count = 0;
-		for(int i = 0; i < s.length(); i++){
-			if(s.charAt(i) == regex){
-				count++;
-			}
-		}
-		return count;
-	}
-
-	protected String arrayToString(String[] array) {
-	    String s = "[";
-
-	    for (int i = 0; i < array.length; i++) {
-	        s += array[i];
-
-	        if (i < array.length - 1) {
-        	    s += ",";
-	        }
-	    }
-
-	    s += "]";
-	    return s;
-	}
-}
-
-class Hora extends stringUtils{
-	private int hora;
-	private int minuto;
-
-	public Hora(){
-		this.hora = 0;
-		this.minuto = 0;
-	}
-
-	public Hora(int hora, int minuto){
-		this.hora = hora;
-		this.minuto = minuto;
-	}
-
-	public void setHora(int hora){
-		if(hora >= 0 && hora <= 23){
-			this.hora = hora;
-		}
-	}
-
-	public void setMinuto(int minuto){
-		if(minuto >= 0 && minuto <= 59){
-			this.minuto = minuto;
-		}
-	}
-
-	public int getHora(){
-		return this.hora;
-	}
-	
-	public int getMinuto(){
-		return this.minuto;
-	}
-
-	public static Hora parseHora(String s){
-		String[] rtn = splitS(s, ':');
-		int hora = Integer.parseInt(rtn[0]);
-		int minuto = Integer.parseInt(rtn[1]);
-
-		return new Hora(hora, minuto);
-	}
-
-	public String formatar(){
-		return String.format("%02d:%02d", this.hora, this.minuto);
-	}
-
-
-}
-
-class Data extends stringUtils{
-	private int dia;
-	private int mes;
-	private int ano;
-
-	public Data(){
-		dia = 0;
-		mes = 0;
-		ano = 0;
-	}
-
-	public Data(int dia, int mes, int ano){
-		this.dia = dia;
-		this.mes = mes;
-		this.ano = ano;
-	}
-
-	public void setDia(int dia){
-		this.dia = dia;
-	}
-
-	public void setMes(int mes){
-                this.mes = mes;
+    protected static String[] splitS(String s, char regex) {
+        int parts = 1;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == regex) {
+                parts++;
+            }
         }
-
-	public void setAno(int ano){
-                this.ano = ano;
+        String[] slices = new String[parts];
+        String atual = "";
+        int count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char caracter = s.charAt(i);
+            if (caracter == regex) {
+                slices[count++] = atual;
+                atual = "";
+            } else {
+                atual += caracter;
+            }
         }
+        slices[count] = atual;
+        return slices;
+    }
 
-	public int getDia(){
-		return this.dia;
-	}
+    protected static int countChar(String s, char regex) {
+        int count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == regex) {
+                count++;
+            }
+        }
+        return count;
+    }
 
-	public int getMes(){
-		return this.mes;
-	}
-
-	public int getAno(){
-		return this.ano;
-	}
-
-	public static Data parseData(String s){
-                String[] rtn = splitS(s, '-');
-                int dia = Integer.parseInt(rtn[2]);
-                int mes = Integer.parseInt(rtn[1]);
-                int ano = Integer.parseInt(rtn[0]);
-
-                return new Data(dia, mes, ano);
-
-	}
-
-	public String formatar(){
-		return String.format("%02d/%02d/%d", this.dia, this.mes, this.ano);
-	}
-
-
-
+    protected String arrayToString(String[] array) {
+        String s = "[";
+        for (int i = 0; i < array.length; i++) {
+            s += array[i];
+            if (i < array.length - 1) {
+                s += ",";
+            }
+        }
+        s += "]";
+        return s;
+    }
 }
 
-class Restaurante extends stringUtils{
-	private int id;
-	private String nome;
-	private String cidade;
-	private int capacidade;
-	private double avaliacao; //nota media
-	private String[] tipos_cozinha; //tipos de culinaria
-	private int faixa_preco; //expresso por $
-	private Hora horario_abertura;
-	private Hora horario_fechamento;
-	private Data data_abertura;
-	private boolean aberto;
+class Hora extends stringUtils {
+    private int hora;
+    private int minuto;
 
+    public Hora() {
+        this.hora = 0;
+        this.minuto = 0;
+    }
 
-	public Restaurante(int id, String nome, String cidade, int capacidade, double avaliacao, String[] tipos_cozinha, int faixa_preco, Hora horario_abertura, Hora horario_fechamento, Data data_abertura, boolean aberto){
-		this.id = id;
-		this.nome = nome;
-		this.cidade = cidade;
-		this.capacidade = capacidade;
-		this.avaliacao = avaliacao;
-		this.tipos_cozinha = new String[tipos_cozinha.length];
-		for(int i = 0; i < tipos_cozinha.length; i++){
-			this.tipos_cozinha[i] = tipos_cozinha[i];
-		}
-		this.faixa_preco = faixa_preco;
-		this.horario_abertura = horario_abertura;
-		this.horario_fechamento = horario_fechamento;
-		this.data_abertura = data_abertura;
-		this.aberto = aberto;
+    public Hora(int hora, int minuto) {
+        this.hora = hora;
+        this.minuto = minuto;
+    }
 
+    public void setHora(int hora) {
+        if (hora >= 0 && hora <= 23) {
+            this.hora = hora;
         }
+    }
 
-/*	public static Restaurante parseRestaurante(String s){
-		String[] slices = splitS(line, ',');
-                return new Restaurante(integer.ParseInt(slices[0]), slices[1], slices[2], integer.ParseInt(slices[3]), Double.parseDouble(slices[4]), 
-			splitS(slices[5], ';'), countChar(slices[6]), '$'), Hora.parseHora(slices[7], Hora.parseHora(8), Data.parseData(slices[9]), Boolean.parseBoolean(slices[10]));
-		
-	}
-*/
-	public static Restaurante parseRestaurante(String s){
-	    String[] slices = splitS(s, ',');
-	    String[] horas = splitS(slices[7], '-');
+    public void setMinuto(int minuto) {
+        if (minuto >= 0 && minuto <= 59) {
+            this.minuto = minuto;
+        }
+    }
 
-	    return new Restaurante(
-	        Integer.parseInt(slices[0]),
-	        slices[1],
-	        slices[2],
-	        Integer.parseInt(slices[3]),
-	        Double.parseDouble(slices[4]),
-	        splitS(slices[5], ';'),
-	        countChar(slices[6], '$'),
-	        Hora.parseHora(horas[0]),
-		Hora.parseHora(horas[1]),
-	        Data.parseData(slices[8]),
-        	Boolean.parseBoolean(slices[9]));
-	}
+    public int getHora() {
+        return this.hora;
+    }
 
-	public String[] gettipos_cozinha(){
-		return this.tipos_cozinha;
-	}
+    public int getMinuto() {
+        return this.minuto;
+    }
 
-	public int getId(){
-		return this.id;
-	}
+    public static Hora parseHora(String s) {
+        String[] rtn = splitS(s, ':');
+        int hora = Integer.parseInt(rtn[0]);
+        int minuto = Integer.parseInt(rtn[1]);
+        return new Hora(hora, minuto);
+    }
 
-	public String getNome(){
-		return this.nome;
-	}
+    public String formatar() {
+        return String.format("%02d:%02d", this.hora, this.minuto);
+    }
+}
 
-	public String getCidade(){
-		return this.cidade;
-	}
+class Data extends stringUtils {
+    private int dia;
+    private int mes;
+    private int ano;
 
-	public int getCapacidade(){
-		return this.capacidade;
-	}
+    public Data() {
+        dia = 0;
+        mes = 0;
+        ano = 0;
+    }
 
-	public Double getAvalicao(){
-		return this.avaliacao;
-	}
+    public Data(int dia, int mes, int ano) {
+        this.dia = dia;
+        this.mes = mes;
+        this.ano = ano;
+    }
 
-	public String getFaixaPreco(){
-		String s = "";
-		for(int i = 0; i < faixa_preco; i++){
-			s+="$";
-		}
+    public void setDia(int dia) {
+        this.dia = dia;
+    }
 
-		return s;
-	}
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
 
-	public Hora getHorarioAbertura(){
-		return this.horario_abertura;
-	}
-	
-	public Hora getHorarioFechamento(){
-		return this.horario_fechamento;
-	}
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
 
-	public Data getDataAbertura(){
-		return this.data_abertura;
-	}
+    public int getDia() {
+        return this.dia;
+    }
 
-	public boolean getAberto(){
-		return this.aberto;
-	}
+    public int getMes() {
+        return this.mes;
+    }
 
-	public void setId(int id){
-		this.id = id;
-	}
-	
-	public void setNome(String s){
-		this.nome = s;
-	}
+    public int getAno() {
+        return this.ano;
+    }
 
-	public void setCidade(String s){
-		this.cidade = s;
-	}
+    public static Data parseData(String s) {
+        String[] rtn = splitS(s, '-');
+        int dia = Integer.parseInt(rtn[2]);
+        int mes = Integer.parseInt(rtn[1]);
+        int ano = Integer.parseInt(rtn[0]);
+        return new Data(dia, mes, ano);
+    }
 
-	public void setCapacidade(int capacidade){
-		this.capacidade = capacidade;
-	}
+    public String formatar() {
+        return String.format("%02d/%02d/%d", this.dia, this.mes, this.ano);
+    }
+}
 
-	public void setAvaliacao(double nota){
-		this.avaliacao = nota;
-	}
+class Restaurante extends stringUtils {
+    private int id;
+    private String nome;
+    private String cidade;
+    private int capacidade;
+    private double avaliacao;
+    private String[] tipos_cozinha;
+    private int faixa_preco;
+    private Hora horario_abertura;
+    private Hora horario_fechamento;
+    private Data data_abertura;
+    private boolean aberto;
 
-	public void setTiposCozinha(String[] s){
-		for(int i = 0; i < tipos_cozinha.length; i++){
-                        this.tipos_cozinha[i] = s[i];
+    public Restaurante(int id, String nome, String city, int cap, double aval, String[] types, int price, Hora open, Hora close, Data date, boolean isOpen) {
+        this.id = id;
+        this.nome = nome;
+        this.cidade = city;
+        this.capacidade = cap;
+        this.avaliacao = aval;
+        this.tipos_cozinha = new String[types.length];
+        
+        for (int i = 0; i < types.length; i++) {
+            this.tipos_cozinha[i] = types[i];
+        }
+        
+        this.faixa_preco = price;
+        this.horario_abertura = open;
+        this.horario_fechamento = close;
+        this.data_abertura = date;
+        this.aberto = isOpen;
+    }
+
+    public static Restaurante parseRestaurante(String s) {
+        String[] slices = splitS(s, ',');
+        String[] horas = splitS(slices[7], '-');
+        return new Restaurante(
+                Integer.parseInt(slices[0]), slices[1], slices[2],
+                Integer.parseInt(slices[3]), Double.parseDouble(slices[4]),
+                splitS(slices[5], ';'), countChar(slices[6], '$'),
+                Hora.parseHora(horas[0]), Hora.parseHora(horas[1]),
+                Data.parseData(slices[8]), Boolean.parseBoolean(slices[9])
+        );
+    }
+
+    public String[] gettipos_cozinha() {
+        return this.tipos_cozinha;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public String getNome() {
+        return this.nome;
+    }
+
+    public String getCidade() {
+        return this.cidade;
+    }
+
+    public int getCapacidade() {
+        return this.capacidade;
+    }
+
+    public Double getAvalicao() {
+        return this.avaliacao;
+    }
+
+    public String getFaixaPreco() {
+        String s = "";
+        for (int i = 0; i < faixa_preco; i++) {
+            s += "$";
+        }
+        return s;
+    }
+
+    public Hora getHorarioAbertura() {
+        return this.horario_abertura;
+    }
+
+    public Hora getHorarioFechamento() {
+        return this.horario_fechamento;
+    }
+
+    public Data getDataAbertura() {
+        return this.data_abertura;
+    }
+
+    public boolean getAberto() {
+        return this.aberto;
+    }
+
+    public String formatar() {
+        String s = "";
+        for (int i = 0; i < this.faixa_preco; i++) {
+            s += "$";
+        }
+        return "[" + this.id + " ## " + this.nome + " ## " + this.cidade + " ## "
+                + this.capacidade + " ## " + this.avaliacao + " ## "
+                + arrayToString(this.tipos_cozinha) + " ## " + s + " ## "
+                + this.horario_abertura.formatar() + "-" + this.horario_fechamento.formatar() + " ## "
+                + this.data_abertura.formatar() + " ## " + this.aberto + "]";
+    }
+}
+
+class ColecaoRestaurantes extends stringUtils {
+    private int tamanho;
+    private Restaurante[] restaurantes;
+
+    public ColecaoRestaurantes() {
+        this.tamanho = 0;
+        this.restaurantes = new Restaurante[10];
+    }
+
+    public int getTamanho() {
+        return this.tamanho;
+    }
+
+    public Restaurante[] getRestaurantes() {
+        return this.restaurantes;
+    }
+
+    private void aumentarCapacidade() {
+        Restaurante[] novo = new Restaurante[this.restaurantes.length * 2];
+        for (int i = 0; i < this.restaurantes.length; i++) {
+            novo[i] = this.restaurantes[i];
+        }
+        this.restaurantes = novo;
+    }
+
+    public void readCsv(String path) {
+        try {
+            Scanner scan = new Scanner(new File(path));
+            if (scan.hasNextLine()) {
+                scan.nextLine();
+            }
+            while (scan.hasNextLine()) {
+                String line = scan.nextLine();
+                if (line.length() == 0) {
+                    break;
                 }
+                if (tamanho == restaurantes.length) {
+                    aumentarCapacidade();
+                }
+                this.restaurantes[tamanho++] = Restaurante.parseRestaurante(line);
+            }
+            scan.close();
+        } catch (Exception e) {
+            System.out.println("Erro ao ler o arquivo");
+        }
+    }
 
-	}
-	
-	public void setFaixaPreco(String s){
-		faixa_preco = countChar(s, '$');
-	}
-
-	public void setHorarioAbertura(Hora hora){
-		this.horario_abertura = hora;
-	}
-
-	public void setHorarioFechamento(Hora hora){
-		this.horario_fechamento = hora;
-	}
-
-	public void setDataAbertura(Data data){
-		this.data_abertura = data;
-	}
-
-	public void setAberto(boolean aberto){
-		this.aberto = aberto;
-	}
-
-	
-
-	public String formatar(){
-		String s = "";
-		for (int i = 0; i < this.faixa_preco; i++) {
-    			s += "$";
-		}
-		
-
-		return "[" + this.id + " ## " 
-	   		+ this.nome + " ## " 
-			+ this.cidade + " ## "
-		    	+ this.capacidade + " ## " 
-			+ this.avaliacao + " ## "
-			+ arrayToString(this.tipos_cozinha) + " ## "
-		    	+ s + " ## "
-		    	+ this.horario_abertura.formatar() + "-"
-		    	+ this.horario_fechamento.formatar() + " ## "
-		    	+ this.data_abertura.formatar() + " ## "
-		    	+ this.aberto + "]";
-	}
+    public static ColecaoRestaurantes readCsv() {
+        ColecaoRestaurantes colecao = new ColecaoRestaurantes();
+        colecao.readCsv("/tmp/restaurantes.csv");
+        return colecao;
+    }
 }
-
-
-class ColecaoRestaurantes extends stringUtils{
-	private int tamanho;
-	private Restaurante[] restaurantes;
-
-	public ColecaoRestaurantes(){
-		this.tamanho = 0;
-		this.restaurantes = new Restaurante[10];
-	}
-
-	public int getTamanho(){
-		return this.tamanho;
-	}
-	public Restaurante[] getRestaurantes(){
-		return this.restaurantes;
-	}
-
-	private void aumentarCapacidade(){
-		Restaurante[] novo = new Restaurante[this.restaurantes.length * 2];
-
-		for(int i = 0; i < this.restaurantes.length; i++){
-			novo[i] = this.restaurantes[i];
-		}
-
-		this.restaurantes = novo;
-	}
-
-	public void readCsv(String path){
-		try{
-			Scanner scan = new Scanner(new File(path));
-			String line;
-			line = scan.nextLine();
-			while(scan.hasNextLine()){
-				line = scan.nextLine();
-				if(line.length() == 0){
-					break;
-				}
-				
-				if(tamanho == restaurantes.length){
-					aumentarCapacidade();
-				}
-
-				this.restaurantes[tamanho] = Restaurante.parseRestaurante(line);
-				tamanho++;
-
-			}
-
-			scan.close();
-
-		}catch(Exception e){
-			e.printStackTrace();
-			System.out.println("Erro ao ler o arquivo");
-		}
-	}
-
-	public static ColecaoRestaurantes readCsv(){
-		ColecaoRestaurantes colecao = new ColecaoRestaurantes();
-		colecao.readCsv("/tmp/restaurantes.csv");
-		return colecao;
-
-	}
-}
-
 
 class No {
-    No esq;
-    No dir;
+    No esq, dir;
     arvoreAVL avl;
     private int key;
 
-    public No() {
-        this.esq = null;
-        this.dir = null;
+    public No(Restaurante r) {
+        this.esq = this.dir = null;
         this.avl = new arvoreAVL();
-        
+        this.key = (r.getCapacidade() % 15);
     }
 
-    public No(Restaurante r) {
-        this.esq = null;
-        this.dir = null;
-        this.avl = new arvoreAVL();
-        this.key = (r.getCapacidade()%15);
-    }
-    
-    public void setKey(Restaurante r){
-        this.key = (r.getCapacidade()%15);
-    }
-    
-    public int getKey(){
+    public int getKey() {
         return this.key;
     }
-
-    
 }
 
 class NoAVL {
-    NoAVL esq;
-    NoAVL dir;
+    NoAVL esq, dir;
     private Restaurante r;
     private int nivel;
 
-    public NoAVL() {
-        this.esq = null;
-        this.dir = null;
-        this.nivel = 1;
-    }
-
     public NoAVL(Restaurante r) {
         this.r = r;
-        this.esq = null;
-        this.dir = null;
+        this.esq = this.dir = null;
         this.nivel = 1;
     }
 
-    public Restaurante getRestaurante() { return this.r; }
-    public void setRestaurante(Restaurante r) { this.r = r; }
-   
-    //pega a altura mais longa e soma +1
-    public void setNivel(){
+    public Restaurante getRestaurante() {
+        return this.r;
+    }
+
+    public void setNivel() {
         this.nivel = 1 + Math.max(getNivel(esq), getNivel(dir));
     }
 
-    public static int getNivel(NoAVL no){
-        if(no == null){
-                return 0;
-        }else{
-                return no.nivel;
-        }
+    public static int getNivel(NoAVL no) {
+        return (no == null) ? 0 : no.nivel;
     }
 }
 
-
-public class arvoreBinaria {
-    No raiz;
-
-    public arvoreBinaria() {
-        this.raiz = null;
-    }
-
-    public void add(Restaurante r) {
-        this.raiz = add(this.raiz, r);
-    }
-
-    private No add(No no, Restaurante r) {
-        if (no == null) {
-            No novo = new No(r);
-            novo.avl.add(r);  
-            return novo;
-        }
-        
-        int key = (r.getCapacidade()%15);
-
-        if (key == no.getKey()) {
-            no.avl.add(r);
-            return no;
-        }
-
-        if (key < no.getKey()) {
-            no.esq = add(no.esq, r);
-        } else {
-            no.dir = add(no.dir, r);
-        }
-
-        return no;
-    }
-
-    public void pesquisar(String nome, int capacidade) {
-        int key = capacidade % 15;
-        System.out.print("RAIZ ");
-        boolean encontrado = pesquisar(key, nome, this.raiz);
-        if (encontrado) System.out.println("SIM");
-        else System.out.println("NAO");
-    }
-
-    private boolean pesquisar(int key, String nome, No no) {
-        if (no == null) return false;
-
-        System.out.print("raiz ");
-        boolean encontrado = no.avl.pesquisar(nome);
-
-        if (encontrado) return true;
-
-        System.out.print("ESQ ");
-        if (pesquisar(key, nome, no.esq)) return true;
-
-        System.out.print("DIR ");
-        return pesquisar(key, nome, no.dir);
-    }
-
-   
-    public void caminharEmOrdem() {
-        caminharEmOrdem(this.raiz);
-    }
-
-    private void caminharEmOrdem(No no) {
-        if (no != null) {
-            caminharEmOrdem(no.esq);
-            no.avl.caminharEmOrdem();
-            caminharEmOrdem(no.dir);
-        }
-    }
-    
-     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        
-        ColecaoRestaurantes colecao = ColecaoRestaurantes.readCsv();
-        arvoreBinaria arvore = new arvoreBinaria();
-
-        while (sc.hasNextLine()) {
-            String linha = sc.nextLine().trim();
-            if (linha.length() == 0) continue;
-            if (stringUtils.equalsS(linha, "-1")) break;
-
-            int id = Integer.parseInt(linha);
-
-            Restaurante encontrado = null;
-            for (Restaurante r : colecao.getRestaurantes()) {
-                if (r != null && r.getId() == id) {
-                    encontrado = r;
-                    break;
-                }
-            }
-
-            if (encontrado != null) {
-                arvore.add(encontrado);
-            }
-        }
-
-        while (sc.hasNextLine()) {
-            String nomePesquisa = sc.nextLine().trim();
-            if (nomePesquisa.length() == 0) continue;
-            if (stringUtils.equalsS(nomePesquisa, "FIM")) break;
-
-            int capacidade = -1;
-            for (Restaurante r : colecao.getRestaurantes()) {
-                if (r != null && stringUtils.equalsS(r.getNome(), nomePesquisa)) {
-                    capacidade = r.getCapacidade();
-                    break;
-                }
-            }
-
-            if (capacidade != -1) {
-                arvore.pesquisar(nomePesquisa, capacidade);
-            } else {
-                System.out.println("raiz NAO");
-            }
-        }
-
-        arvore.caminharEmOrdem();
-        sc.close();
-    }
-}
-    
 class arvoreAVL {
     NoAVL raiz;
 
@@ -626,41 +369,31 @@ class arvoreAVL {
         this.raiz = null;
     }
 
-    private NoAVL balancear(NoAVL no){
-        if(no == null){
+    private NoAVL balancear(NoAVL no) {
+        if (no == null) {
             return null;
         }
-
         int fator = NoAVL.getNivel(no.dir) - NoAVL.getNivel(no.esq);
-
-        if(fator >= -1 && fator <= 1){
+        
+        if (fator >= -1 && fator <= 1) {
             no.setNivel();
-        }
-
-        else if(fator < -1){
+        } else if (fator < -1) {
             int fFilho = NoAVL.getNivel(no.esq.dir) - NoAVL.getNivel(no.esq.esq);
-
-            if(fFilho <= 0){
+            if (fFilho <= 0) {
                 no = rotacionarDir(no);
-            }
-            else{
+            } else {
                 no.esq = rotacionarEsq(no.esq);
                 no = rotacionarDir(no);
             }
-        }
-
-        else if(fator > 1){
+        } else if (fator > 1) {
             int fFilho = NoAVL.getNivel(no.dir.dir) - NoAVL.getNivel(no.dir.esq);
-
-            if(fFilho >= 0){
+            if (fFilho >= 0) {
                 no = rotacionarEsq(no);
-            }
-            else{
+            } else {
                 no.dir = rotacionarDir(no.dir);
                 no = rotacionarEsq(no);
             }
         }
-
         return no;
     }
 
@@ -672,68 +405,54 @@ class arvoreAVL {
         if (no == null) {
             return new NoAVL(r);
         }
-
-        if (r.getNome().compareTo(no.getRestaurante().getNome()) == 0) {
+        
+        int cmp = r.getNome().compareTo(no.getRestaurante().getNome());
+        if (cmp == 0) {
             return balancear(no);
         }
-
-        if (r.getNome().compareTo(no.getRestaurante().getNome()) < 0) {
+        
+        if (cmp < 0) {
             no.esq = add(no.esq, r);
         } else {
             no.dir = add(no.dir, r);
         }
-
+        
         return balancear(no);
     }
 
-    private NoAVL rotacionarEsq(NoAVL no){
+    private NoAVL rotacionarEsq(NoAVL no) {
         NoAVL noDir = no.dir;
-        NoAVL noDirEsq = noDir.esq;
-
+        no.dir = noDir.esq;
         noDir.esq = no;
-        no.dir = noDirEsq;
-
         no.setNivel();
         noDir.setNivel();
-
         return noDir;
     }
 
-    private NoAVL rotacionarDir(NoAVL no){
+    private NoAVL rotacionarDir(NoAVL no) {
         NoAVL noEsq = no.esq;
-        NoAVL noEsqDir = noEsq.dir;
-
+        no.esq = noEsq.dir;
         noEsq.dir = no;
-        no.esq = noEsqDir;
-
         no.setNivel();
         noEsq.setNivel();
-
         return noEsq;
     }
 
-    private NoAVL rotacionarDirEsq(NoAVL no){
-        no.dir = rotacionarDir(no.dir);
-        return rotacionarEsq(no);
-    }
-
-    private NoAVL rotacionarEsqDir(NoAVL no){
-        no.esq = rotacionarEsq(no.esq);
-        return rotacionarDir(no);
-    }
-
-    public boolean pesquisar(String nome) {
+    public Restaurante pesquisar(String nome) {
         return pesquisar(nome, this.raiz);
     }
 
-    private boolean pesquisar(String nome, NoAVL no) {
-        if (no == null) return false;
-
-        if (nome.compareTo(no.getRestaurante().getNome()) == 0) {
-            return true;
+    private Restaurante pesquisar(String nome, NoAVL no) {
+        if (no == null) {
+            return null;
         }
-
-        if (nome.compareTo(no.getRestaurante().getNome()) < 0) {
+        
+        int cmp = nome.compareTo(no.getRestaurante().getNome());
+        if (cmp == 0) {
+            return no.getRestaurante();
+        }
+        
+        if (cmp < 0) {
             System.out.print("esq ");
             return pesquisar(nome, no.esq);
         } else {
@@ -755,6 +474,127 @@ class arvoreAVL {
     }
 }
 
- 
+public class arvoreBinaria {
+    No raiz;
 
+    public arvoreBinaria() {
+        this.raiz = null;
+    }
 
+    public void add(Restaurante r) {
+        this.raiz = add(this.raiz, r);
+    }
+
+    private No add(No no, Restaurante r) {
+        if (no == null) {
+            No novo = new No(r);
+            novo.avl.add(r);
+            return novo;
+        }
+        
+        int key = r.getCapacidade() % 15;
+        if (key == no.getKey()) {
+            no.avl.add(r);
+            return no;
+        }
+        
+        if (key < no.getKey()) {
+            no.esq = add(no.esq, r);
+        } else {
+            no.dir = add(no.dir, r);
+        }
+        
+        return no;
+    }
+
+    public void pesquisar(String nome, int capacidade) {
+        System.out.print("RAIZ ");
+        Restaurante r = pesquisar(nome, this.raiz);
+        if (r != null) {
+            System.out.println("SIM " + r.formatar());
+        } else {
+            System.out.println("NAO");
+        }
+    }
+
+    private Restaurante pesquisar(String nome, No no) {
+        if (no == null) {
+            return null;
+        }
+        
+        System.out.print("raiz ");
+        Restaurante r = no.avl.pesquisar(nome);
+        if (r != null) {
+            return r;
+        }
+        
+        System.out.print("ESQ ");
+        r = pesquisar(nome, no.esq);
+        if (r != null) {
+            return r;
+        }
+        
+        System.out.print("DIR ");
+        return pesquisar(nome, no.dir);
+    }
+
+    public void caminharEmOrdem() {
+        caminharEmOrdem(this.raiz);
+    }
+
+    private void caminharEmOrdem(No no) {
+        if (no != null) {
+            caminharEmOrdem(no.esq);
+            no.avl.caminharEmOrdem();
+            caminharEmOrdem(no.dir);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ColecaoRestaurantes colecao = ColecaoRestaurantes.readCsv();
+        arvoreBinaria arvore = new arvoreBinaria();
+        
+        while (sc.hasNextLine()) {
+            String linha = sc.nextLine().trim();
+            if (linha.length() == 0) {
+                continue;
+            }
+            if (stringUtils.equalsS(linha, "-1")) {
+                break;
+            }
+            int id = Integer.parseInt(linha);
+            for (Restaurante r : colecao.getRestaurantes()) {
+                if (r != null && r.getId() == id) {
+                    arvore.add(r);
+                    break;
+                }
+            }
+        }
+        
+        while (sc.hasNextLine()) {
+            String nomePesquisa = sc.nextLine().trim();
+            if (nomePesquisa.length() == 0) {
+                continue;
+            }
+            if (stringUtils.equalsS(nomePesquisa, "FIM")) {
+                break;
+            }
+            int capacidade = -1;
+            for (Restaurante r : colecao.getRestaurantes()) {
+                if (r != null && stringUtils.equalsS(r.getNome(), nomePesquisa)) {
+                    capacidade = r.getCapacidade();
+                    break;
+                }
+            }
+            
+            if (capacidade != -1) {
+                arvore.pesquisar(nomePesquisa, capacidade);
+            } else {
+                System.out.println("raiz NAO");
+            }
+        }
+        
+        sc.close();
+    }
+}
