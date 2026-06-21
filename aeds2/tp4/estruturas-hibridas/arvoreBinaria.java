@@ -433,40 +433,70 @@ class ColecaoRestaurantes extends stringUtils{
 class No {
     No esq;
     No dir;
-    int key;
+    arvoreAVL avl;
+    private int key;
 
     public No() {
         this.esq = null;
         this.dir = null;
+        this.avl = new arvoreAVL();
+        
     }
 
     public No(Restaurante r) {
+        this.esq = null;
+        this.dir = null;
+        this.avl = new arvoreAVL();
+        this.key = (r.getCapacidade()%15);
+    }
+    
+    public void setKey(Restaurante r){
+        this.key = (r.getCapacidade()%15);
+    }
+    
+    public int getKey(){
+        return this.key;
+    }
+
+    
+}
+
+class NoAVL {
+    NoAVL esq;
+    NoAVL dir;
+    private Restaurante r;
+    private int nivel;
+
+    public NoAVL() {
+        this.esq = null;
+        this.dir = null;
+        this.nivel = 1;
+    }
+
+    public NoAVL(Restaurante r) {
         this.r = r;
         this.esq = null;
         this.dir = null;
+        this.nivel = 1;
     }
 
     public Restaurante getRestaurante() { return this.r; }
     public void setRestaurante(Restaurante r) { this.r = r; }
+   
+    //pega a altura mais longa e soma +1
+    public void setNivel(){
+        this.nivel = 1 + Math.max(getNivel(esq), getNivel(dir));
+    }
+
+    public static int getNivel(NoAVL no){
+        if(no == null){
+                return 0;
+        }else{
+                return no.nivel;
+        }
+    }
 }
 
-class No2{
-	No2 esq;
-	No2 dir;
-	private string nome;
-
-	public No2(){
-		this.esq = null;
-		this.dir = null;
-		this.nome = "";
-	}
-
-	public No2(String nome){
-		this.esq = null;
-		this.dir = null;
-		this.nome = nome;
-	}
-}
 
 public class arvoreBinaria {
     No raiz;
@@ -481,15 +511,19 @@ public class arvoreBinaria {
 
     private No add(No no, Restaurante r) {
         if (no == null) {
-            return new No(r);
+            No novo = new No(r);
+            novo.avl.add(r);  
+            return novo;
         }
+        
+        int key = (r.getCapacidade()%15);
 
-       
-        if (r.getNome().compareTo(no.getRestaurante().getNome()) == 0) {
+        if (key == no.getKey()) {
+            no.avl.add(r);
             return no;
         }
 
-        if (r.getNome().compareTo(no.getRestaurante().getNome()) < 0) {
+        if (key < no.getKey()) {
             no.esq = add(no.esq, r);
         } else {
             no.dir = add(no.dir, r);
@@ -498,33 +532,27 @@ public class arvoreBinaria {
         return no;
     }
 
-    public void pesquisar(String nome) {
-     
-        System.out.print("raiz ");
-        boolean encontrado = pesquisar(nome, this.raiz);
-        if (encontrado) {
-            System.out.println("SIM");
-        } else {
-            System.out.println("NAO");
-        }
+    public void pesquisar(String nome, int capacidade) {
+        int key = capacidade % 15;
+        System.out.print("RAIZ ");
+        boolean encontrado = pesquisar(key, nome, this.raiz);
+        if (encontrado) System.out.println("SIM");
+        else System.out.println("NAO");
     }
 
-    private boolean pesquisar(String nome, No no) {
-        if (no == null) {
-            return false;
-        }
+    private boolean pesquisar(int key, String nome, No no) {
+        if (no == null) return false;
 
-        if (nome.compareTo(no.getRestaurante().getNome()) == 0) {
-            return true;
-        }
+        System.out.print("raiz ");
+        boolean encontrado = no.avl.pesquisar(nome);
 
-        if (nome.compareTo(no.getRestaurante().getNome()) < 0) {
-            System.out.print("esq ");
-            return pesquisar(nome, no.esq);
-        } else {
-            System.out.print("dir ");
-            return pesquisar(nome, no.dir);
-        }
+        if (encontrado) return true;
+
+        System.out.print("ESQ ");
+        if (pesquisar(key, nome, no.esq)) return true;
+
+        System.out.print("DIR ");
+        return pesquisar(key, nome, no.dir);
     }
 
    
@@ -535,13 +563,12 @@ public class arvoreBinaria {
     private void caminharEmOrdem(No no) {
         if (no != null) {
             caminharEmOrdem(no.esq);
-            System.out.println(no.getRestaurante().formatar());
+            no.avl.caminharEmOrdem();
             caminharEmOrdem(no.dir);
         }
     }
-
- 
- public static void main(String[] args) {
+    
+     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         
         ColecaoRestaurantes colecao = ColecaoRestaurantes.readCsv();
@@ -550,10 +577,7 @@ public class arvoreBinaria {
         while (sc.hasNextLine()) {
             String linha = sc.nextLine().trim();
             if (linha.length() == 0) continue;
-
-            if (stringUtils.equalsS(linha, "-1")) {
-                break;
-            }
+            if (stringUtils.equalsS(linha, "-1")) break;
 
             int id = Integer.parseInt(linha);
 
@@ -573,19 +597,164 @@ public class arvoreBinaria {
         while (sc.hasNextLine()) {
             String nomePesquisa = sc.nextLine().trim();
             if (nomePesquisa.length() == 0) continue;
+            if (stringUtils.equalsS(nomePesquisa, "FIM")) break;
 
-            if (stringUtils.equalsS(nomePesquisa, "FIM")) {
-                break;
+            int capacidade = -1;
+            for (Restaurante r : colecao.getRestaurantes()) {
+                if (r != null && stringUtils.equalsS(r.getNome(), nomePesquisa)) {
+                    capacidade = r.getCapacidade();
+                    break;
+                }
             }
 
-            arvore.pesquisar(nomePesquisa);
+            if (capacidade != -1) {
+                arvore.pesquisar(nomePesquisa, capacidade);
+            } else {
+                System.out.println("raiz NAO");
+            }
         }
 
-    
         arvore.caminharEmOrdem();
-
-      
-
         sc.close();
     }
 }
+    
+class arvoreAVL {
+    NoAVL raiz;
+
+    public arvoreAVL() {
+        this.raiz = null;
+    }
+
+    private NoAVL balancear(NoAVL no){
+        if(no == null){
+            return null;
+        }
+
+        int fator = NoAVL.getNivel(no.dir) - NoAVL.getNivel(no.esq);
+
+        if(fator >= -1 && fator <= 1){
+            no.setNivel();
+        }
+
+        else if(fator < -1){
+            int fFilho = NoAVL.getNivel(no.esq.dir) - NoAVL.getNivel(no.esq.esq);
+
+            if(fFilho <= 0){
+                no = rotacionarDir(no);
+            }
+            else{
+                no.esq = rotacionarEsq(no.esq);
+                no = rotacionarDir(no);
+            }
+        }
+
+        else if(fator > 1){
+            int fFilho = NoAVL.getNivel(no.dir.dir) - NoAVL.getNivel(no.dir.esq);
+
+            if(fFilho >= 0){
+                no = rotacionarEsq(no);
+            }
+            else{
+                no.dir = rotacionarDir(no.dir);
+                no = rotacionarEsq(no);
+            }
+        }
+
+        return no;
+    }
+
+    public void add(Restaurante r) {
+        this.raiz = add(this.raiz, r);
+    }
+
+    private NoAVL add(NoAVL no, Restaurante r) {
+        if (no == null) {
+            return new NoAVL(r);
+        }
+
+        if (r.getNome().compareTo(no.getRestaurante().getNome()) == 0) {
+            return balancear(no);
+        }
+
+        if (r.getNome().compareTo(no.getRestaurante().getNome()) < 0) {
+            no.esq = add(no.esq, r);
+        } else {
+            no.dir = add(no.dir, r);
+        }
+
+        return balancear(no);
+    }
+
+    private NoAVL rotacionarEsq(NoAVL no){
+        NoAVL noDir = no.dir;
+        NoAVL noDirEsq = noDir.esq;
+
+        noDir.esq = no;
+        no.dir = noDirEsq;
+
+        no.setNivel();
+        noDir.setNivel();
+
+        return noDir;
+    }
+
+    private NoAVL rotacionarDir(NoAVL no){
+        NoAVL noEsq = no.esq;
+        NoAVL noEsqDir = noEsq.dir;
+
+        noEsq.dir = no;
+        no.esq = noEsqDir;
+
+        no.setNivel();
+        noEsq.setNivel();
+
+        return noEsq;
+    }
+
+    private NoAVL rotacionarDirEsq(NoAVL no){
+        no.dir = rotacionarDir(no.dir);
+        return rotacionarEsq(no);
+    }
+
+    private NoAVL rotacionarEsqDir(NoAVL no){
+        no.esq = rotacionarEsq(no.esq);
+        return rotacionarDir(no);
+    }
+
+    public boolean pesquisar(String nome) {
+        return pesquisar(nome, this.raiz);
+    }
+
+    private boolean pesquisar(String nome, NoAVL no) {
+        if (no == null) return false;
+
+        if (nome.compareTo(no.getRestaurante().getNome()) == 0) {
+            return true;
+        }
+
+        if (nome.compareTo(no.getRestaurante().getNome()) < 0) {
+            System.out.print("esq ");
+            return pesquisar(nome, no.esq);
+        } else {
+            System.out.print("dir ");
+            return pesquisar(nome, no.dir);
+        }
+    }
+
+    public void caminharEmOrdem() {
+        caminharEmOrdem(this.raiz);
+    }
+
+    private void caminharEmOrdem(NoAVL no) {
+        if (no != null) {
+            caminharEmOrdem(no.esq);
+            System.out.println(no.getRestaurante().formatar());
+            caminharEmOrdem(no.dir);
+        }
+    }
+}
+
+ 
+
+
