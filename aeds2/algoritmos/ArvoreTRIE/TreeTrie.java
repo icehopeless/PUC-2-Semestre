@@ -7,7 +7,6 @@ Implementacao da arvore TRIE com metodos de inserir, mostrar e pesquisar
 
 public class TreeTrie {
     private NodeTrie raiz;
-    private final int sizeAlfa = 256;
     
     public TreeTrie(){
         raiz = new NodeTrie();
@@ -17,14 +16,22 @@ public class TreeTrie {
         inserir(raiz,s, 0);
     }
 
-    public void pesquisar(String s){
-        pesquisar(raiz, s, 0);
+    public boolean pesquisar(String s){
+       return pesquisar(raiz, s, 0);
     }
 
     public void mostrar(){
         mostrar(raiz, "");
     }
 
+
+    public boolean hasEndWiths(String sufix){
+        return hasEndWiths(raiz, sufix, "");
+    }
+
+    public int countHasEndsWith(String sufix){
+        return countHasEndsWith(raiz, sufix, "");
+    }
     /*public void inserir(NodeTrie node, String s, int i){
         if(node.alfabeto[(int)s.charAt(i)] == null){
             node.alfabeto[(int)s.charAt(i)] = new NodeTrie(s.charAt(i));
@@ -44,7 +51,7 @@ public class TreeTrie {
         }
     } 
     */
-    public void inserir(NodeTrie node, String s, int i) {
+    private void inserir(NodeTrie node, String s, int i) {
         char c = s.charAt(i);
 
         if (node.alfabeto[c] == null) {
@@ -58,34 +65,60 @@ public class TreeTrie {
         }
     }
 
-    public boolean pesquisar(NodeTrie node, String s, int i){
+    private boolean pesquisar(NodeTrie node, String s, int i){
         char c = s.charAt(i);    
         boolean rtn = false;
 
         if(node.alfabeto[c] == null){
             rtn = false;
-        }
-
-        else if(i == s.length()-1){
+        }else if(i == s.length()-1){
             rtn = node.alfabeto[c].isFinalString();
-        }
-
-        else{
+        }else{
             rtn = pesquisar(node.alfabeto[c], s, i+1);
         }
 
         return rtn;
     }
 
-    public void mostrar(NodeTrie node, String palavra){
+    private void mostrar(NodeTrie node, String palavra){
         if(node.isFinalString()){
             System.out.println(palavra);
         }
-
+            
         for(int i = 0; i < node.alfabeto.length; i++){
             if(node.alfabeto[i] != null){
                 mostrar(node.alfabeto[i], palavra + node.alfabeto[i].getValue());
             }
         }
+    }
+
+    private boolean hasEndWiths(NodeTrie node,String sufix, String cacheSufix){
+        boolean rtn = false;
+
+        if(node.isFinalString() && cacheSufix.endsWith(sufix)){
+            rtn = true;
+        }else{
+            for(int i =0; i < node.alfabeto.length && !rtn; i++){
+                if(node.alfabeto[i] != null){
+                    rtn = hasEndWiths(node.alfabeto[i], sufix, cacheSufix + node.alfabeto[i].getValue());
+                }
+            }
+        }
+        return rtn;
+    }
+
+    private int countHasEndsWith(NodeTrie node,String sufix,String cahcString){
+        int result = 0;
+        if(node.isFinalString() && cahcString.endsWith(sufix)){
+            result = 1;
+        }
+
+        for(int i = 0; i < node.alfabeto.length; i++){
+            if(node.alfabeto[i] != null){
+                result += countHasEndsWith(node.alfabeto[i], sufix, cahcString + node.alfabeto[i].getValue());
+            }
+        }
+
+        return result;
     }
 }

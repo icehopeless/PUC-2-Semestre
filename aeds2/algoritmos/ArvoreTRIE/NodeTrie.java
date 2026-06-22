@@ -11,6 +11,7 @@ public class NodeTrie{
     private char value;
     private boolean finalString;
 
+
     public NodeTrie(char value) {
         this.value = value;
         this.alfabeto = new NodeTrie[sizeAlfa];
@@ -47,4 +48,5 @@ public class NodeTrie{
     public void setValue(char value){
         this.value = value;
     }
+
 }
